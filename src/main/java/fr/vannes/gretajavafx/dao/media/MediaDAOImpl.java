@@ -1,6 +1,7 @@
 package fr.vannes.gretajavafx.dao.media;
 
 import fr.vannes.gretajavafx.dao.DAOFactory;
+import fr.vannes.gretajavafx.model.Categorie;
 import fr.vannes.gretajavafx.model.Media;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MediaDAOImpl implements MediaDAO {
+public class MediaDAOImpl implements MediaDAO<Media> {
 
     private static final String MEDIA_ID = "media_id";
     private static final String TITLE = "title";
@@ -28,19 +29,19 @@ public class MediaDAOImpl implements MediaDAO {
     private static final String INSERT = "INSERT INTO media (media_id, title, description, category_id, subcategory_id) VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String READONE = "SELECT m.media_id, m.title, m.description, " +
-            "c.category_id AS category_id, c.label AS category_label, " +
-            "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
-            "FROM media AS m " +
-            "LEFT JOIN category c ON m.category_id = c.category_id " +
-            "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id  " +
-            "WHERE m.media_id = ?";
+                                          "c.category_id AS category_id, c.label AS category_label, " +
+                                          "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
+                                          "FROM media AS m " +
+                                          "LEFT JOIN category c ON m.category_id = c.category_id " +
+                                          "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id  " +
+                                          "WHERE m.media_id = ?";
 
     private static final String READALL = "SELECT m.media_id, m.title, m.description, " +
-            "c.category_id AS category_id, c.label AS category_label, " +
-            "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
-            "LEFT JOIN category c ON m.category_id = c.category_id " +
-            "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id " +
-            "ORDER BY m.media_id DESC";
+                                          "c.category_id AS category_id, c.label AS category_label, " +
+                                          "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
+                                          "LEFT JOIN category c ON m.category_id = c.category_id " +
+                                          "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id " +
+                                          "ORDER BY m.media_id DESC";
 
     private static final String UPDATE = "UPDATE media SET title = ?, description = ?, category_id = ?, subcategory_id = ? WHERE media_id = ?";
     ;
@@ -91,13 +92,13 @@ public class MediaDAOImpl implements MediaDAO {
     }
 
     @Override
-    public Boolean create(Object o) {
+    public Boolean create(Media media) {
         int result = 0;
         PreparedStatement ps = null;
 
         try {
             ps = _conn.prepareStatement(INSERT);
-            ps.setString(1, media.getMedia_id());
+            ps.setString(1, media.getMediaId());
             ps.setString(2, media.getTitre());
             ps.setString(3, media.getDescription());
             ps.setInt(4, media.getCategorie().getId());
@@ -133,9 +134,9 @@ public class MediaDAOImpl implements MediaDAO {
         Map<Integer, Integer> counters = new HashMap<Integer, Integer>();
 
         String sql = "SELECT SUBSTRING(media_id, 1, 4) AS year, COUNT(*) AS nb_media " +
-                "FROM media " +
-                "GROUP BY year " +
-                "ORDER BY year";
+                     "FROM media " +
+                     "GROUP BY year " +
+                     "ORDER BY year";
 
         try {
             PreparedStatement ps = _conn.prepareStatement(sql);
@@ -170,9 +171,8 @@ public class MediaDAOImpl implements MediaDAO {
                 media = new Media(media_id, title, description);
                 media.setCategorie(this.getCategorie(rs));
                 media.setSousCategorie(this.getSousCategorie(rs));
+
             }
-
-
             ps.close();
             _df.closeConnection();
         } catch (SQLException e) {
@@ -218,15 +218,15 @@ public class MediaDAOImpl implements MediaDAO {
     }
 
     @Override
-    public Object update(Object media) {
+    public Media update(Media media) {
         try {
 
             PreparedStatement ps = _conn.prepareStatement(UPDATE);
             ps.setString(1, media.getTitre());
             ps.setString(2, media.getDescription());
-            ps.setInt(3, media.getCategorie().getIdCategory());
-            ps.setInt(4, media.getSubcategory().getIdSubcategory());
-            ps.setString(5, media.getMedia_id());
+            ps.setInt(3, media.getCategorie().getIdCategorie());
+            ps.setInt(4, media.getSousCategorie().getIdSousCategorie());
+            ps.setString(5, media.getMediaId());
 
             ps.close();
             _df.closeConnection();
@@ -245,12 +245,12 @@ public class MediaDAOImpl implements MediaDAO {
     }
 
     @Override
-    public Boolean delete(String media_id) {
+    public Boolean delete(String mediaId) {
         Boolean result = false;
         try {
 
             PreparedStatement ps = _conn.prepareStatement(DELETE);
-            ps.setString(1, media_id);
+            ps.setString(1, mediaId);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -269,37 +269,26 @@ public class MediaDAOImpl implements MediaDAO {
 
     @Override
     public Categorie getCategorie(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public SousCategorie getSousCategorie(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public Category getCategory(ResultSet rs) throws SQLException {
-        Category category = null;
+        Categorie categorie = null;
         if (rs.getInt(CATEGORY_ID) > 0) {
             int category_id = rs.getInt(CATEGORY_ID);
             String category_label = rs.getString(CATEGORY_LABEL);
 
-            category = new Category(category_id, category_label);
+            categorie = new Categorie(category_id, category_label);
 
         }
-        return category;
+        return categorie;
     }
 
     @Override
-    public SousCategory getSubCategory(ResultSet rs) throws SQLException {
-        SubCategory sub_category = null;
+    public SousCategorie getSubCategorie(ResultSet rs) throws SQLException {
+        SousCategorie sub_category = null;
 
         if (rs.getInt(SUBCATEGORY_ID) > 0) {
             int subcategory_id = rs.getInt(SUBCATEGORY_ID);
             String subcategory_label = rs.getString(SUBCATEGORY_LABEL);
-            sub_category = new SubCategory(subcategory_id, subcategory_label);
+            sub_category = new SousCategorie(subcategory_id, subcategory_label);
         }
         return sub_category;
     }
 }
-
