@@ -102,8 +102,8 @@ public class MediaDAOImpl implements MediaDAO<Media> {
             ps.setString(1, media.getMediaId());
             ps.setString(2, media.getTitre());
             ps.setString(3, media.getDescription());
-            ps.setInt(4, media.getCategorie().getId());
-            ps.setInt(5, media.getSousCategorie().getId());
+            ps.setInt(4, media.getCategorie().getIdCategorie());
+            ps.setInt(5, media.getSousCategorie().getIdSousCategorie());
 
             result = ps.executeUpdate();
 

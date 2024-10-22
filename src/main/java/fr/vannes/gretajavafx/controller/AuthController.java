@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 /**
- * classe Controller pour la partie authentification
+ * Classe Controller pour la partie authentification
  */
 public class AuthController {
     @FXML
