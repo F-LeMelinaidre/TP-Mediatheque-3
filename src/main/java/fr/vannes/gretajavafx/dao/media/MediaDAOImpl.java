@@ -3,6 +3,7 @@ package fr.vannes.gretajavafx.dao.media;
 import fr.vannes.gretajavafx.dao.DAOFactory;
 import fr.vannes.gretajavafx.model.Categorie;
 import fr.vannes.gretajavafx.model.Media;
+import fr.vannes.gretajavafx.model.SousCategorie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -281,7 +282,7 @@ public class MediaDAOImpl implements MediaDAO<Media> {
     }
 
     @Override
-    public SousCategorie getSubCategorie(ResultSet rs) throws SQLException {
+    public SousCategorie getSousCategorie(ResultSet rs) throws SQLException {
         SousCategorie sub_category = null;
 
         if (rs.getInt(SUBCATEGORY_ID) > 0) {
