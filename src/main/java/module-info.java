@@ -6,6 +6,7 @@ module fr.vannes.gretajavafx {
     requires com.dlsc.formsfx;
     requires sib.api.v3.sdk;
     requires java.sql;
+    requires java.desktop;
 
     opens fr.vannes.gretajavafx to javafx.fxml;
     exports fr.vannes.gretajavafx;

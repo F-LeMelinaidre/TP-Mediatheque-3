@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="fr.vannes.gretajavafx.controller.RechercheEmprunteurController">
+
+    <TextField fx:id="idField" promptText="ID de l'emprunteur" /> <!-- ID du champ doit être "idField" -->
+
+    <Button fx:id="rechercherButton" text="Rechercher" onAction="#rechercherEmprunteur" />
+
+    <Label fx:id="resultLabel" text="Résultat de la recherche apparaîtra ici" />
+
+</VBox>
+
