@@ -1,7 +1,7 @@
 package fr.vannes.gretajavafx.controller;
 
 import fr.vannes.gretajavafx.Main;
-import fr.vannes.gretajavafx.model.Personne;
+import fr.vannes.gretajavafx.model.Emprunteur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,9 +32,9 @@ public class HomeController implements Initializable {
     @FXML
     private TableView monTab;
     @FXML
-    private TableColumn<Personne, String> prenom,nom;
+    private TableColumn<Emprunteur, String> prenom,nom;
 
-    private final ObservableList<Personne> obsPersonne= FXCollections.observableArrayList();
+    private final ObservableList<Emprunteur> obsPersonne= FXCollections.observableArrayList();
 
     /**
      * Instance unique d'AppController
@@ -92,8 +92,8 @@ public class HomeController implements Initializable {
     }
 
     public void loadTable(){
-       obsPersonne.add(new Personne("Dupont", "Jacques"));
-      obsPersonne.add(new Personne("Martin", "Jean"));
+       obsPersonne.add(new Emprunteur("Dupont", "Jacques"));
+      obsPersonne.add(new Emprunteur("Martin", "Jean"));
     //cablage des colonnes
      nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
      prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
