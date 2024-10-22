@@ -16,8 +16,8 @@ public class DAOFactory {
     private static Connection _connection = null;
 
     private static final String SQL_SERVER = "jdbc:mysql://109.234.166.12:3306/";
-    private static final String SQL_DATA_BASE = "tima6358_amina";
-    private static final String SQL_USER = "tima6358_amina";
+    private static final String SQL_DATA_BASE = "tima6358_frederic";
+    private static final String SQL_USER = "tima6358_frederic";
     private static final String SQL_PASS = "alanTuring2024!";
 
 

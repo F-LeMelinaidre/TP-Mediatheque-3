@@ -7,12 +7,15 @@ import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAOImpl;
 import fr.vannes.gretajavafx.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -37,6 +40,9 @@ public class HomeController implements Initializable {
     private TableView<Emprunteur> monTab; // Typage de la TableView
     @FXML
     private TableColumn<Emprunteur, String> prenom, nom;
+
+    @FXML
+    private AnchorPane rootPane;
 
     private final ObservableList<Emprunteur> obsPersonne = FXCollections.observableArrayList();
     private EmprunteurDAO emprunteurDAO; // DAO pour interagir avec les emprunteurs
@@ -89,10 +95,10 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         app = this; // Initialisation de l'instance
-        DAOFactory daoFactory = DAOFactory.getInstance();
+        /*DAOFactory daoFactory = DAOFactory.getInstance();
         this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory); // Initialiser le DAO
         loadListe();
-        loadTable();
+        loadTable();*/
     }
 
     /**
@@ -151,6 +157,39 @@ public class HomeController implements Initializable {
         stage.setTitle("Envoi courriel");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void ajouterEmprunteur() throws IOException {
+        try {
+            // Charger le FXML pour la vue "ajoutEmprunteur"
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunteur.fxml"));
+            Parent ajoutEmprunteurPane = loader.load();
+
+            // Remplacer le contenu du conteneur rootPane par la vue "ajoutEmprunteur"
+            rootPane.getChildren().clear(); // Effacer les éléments existants
+            rootPane.getChildren().add(ajoutEmprunteurPane); // Ajouter la nouvelle vue
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    public void ajouterEmprunt() throws IOException {
+        try {
+            // Charger le FXML pour la vue "ajoutEmprunteur"
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunt.fxml"));
+            Parent ajoutEmpruntPane = loader.load();
+
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(ajoutEmpruntPane);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 

@@ -37,6 +37,7 @@ public class AjoutEmprunteurController {
     @FXML
     public void initialize() {
         // Initialisation des éléments si nécessaire
+        this.ajouterEmprunteur();
     }
 
     @FXML
