@@ -1,35 +1,61 @@
+/*
+ * Copyright (c) 2024.
+ * Frédéric Le Mélianidre
+ * Formation CDA
+ */
+
 package fr.vannes.gretajavafx.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAOFactory {
-    private static DAOFactory instance;
-    private String url;
-    private String username;
-    private String password;
 
-    private DAOFactory(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }
+    private static Connection _connection = null;
 
-    public static synchronized DAOFactory getInstance() {
-        if (instance == null) {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                instance = new DAOFactory("jdbc:mysql://109.234.166.12:3306/tima6358_amina",
-                        "tima6358_amina", "alanTuring2024!");
-            } catch (ClassNotFoundException e) {
-                System.err.println("Driver JDBC non trouvé : " + e.getMessage());
-            }
+    private static final String SQL_SERVER = "jdbc:mysql://109.234.166.12:3306/";
+    private static final String SQL_DATA_BASE = "tima6358_amina";
+    private static final String SQL_USER = "tima6358_amina";
+    private static final String SQL_PASS = "alanTuring2024!";
+
+
+    public static DAOFactory getInstance() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return instance;
+        return new DAOFactory();
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, username, password);
+        String url = SQL_SERVER + SQL_DATA_BASE;
+        return DriverManager.getConnection(url, SQL_USER, SQL_PASS);
+    }
+
+    public void closeConnection() {
+        if(_connection != null) {
+            try {
+                getConnection().close();
+                _connection = null;
+            } catch (SQLException e) {
+                _connection = null;
+                System.out.println(e.getSQLState());
+            }
+
+        }
+    }
+
+    public void closeResultSet(ResultSet rs) {
+        if(rs != null) {
+            try {
+                rs.close();
+                rs = null;
+            } catch (SQLException e) {
+                System.out.println(e.getSQLState());
+            }
+        }
     }
 }
