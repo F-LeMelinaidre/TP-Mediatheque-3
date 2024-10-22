@@ -1,11 +1,11 @@
 package fr.vannes.gretajavafx.model;
 
-public class Personne {
+public class Emprunteur {
 
     private String nom;
     private String prenom;
 
-    public Personne(String nom, String prenom) {
+    public Emprunteur(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
     }

@@ -15,7 +15,7 @@ import static fr.vannes.gretajavafx.controller.Configuration.CURRENT_YEAR;
 
 public class Media {
 
-    private String media_id;
+    private String mediaId;
     private String titre;
     private String description;
     private Categorie categorie;
@@ -48,8 +48,8 @@ public class Media {
      * @param description {@code String} {@code description}
      */
     public Media(String idMedia, String titre, String description) {
-        this.media_id = idMedia;
-        this.titre    = titre;
+        this.mediaId = idMedia;
+        this.titre   = titre;
         this.description = description;
     }
 
@@ -61,8 +61,8 @@ public class Media {
      * @param categorie {@link Categorie}
      */
     public Media(String idMedia, String titre, String description, Categorie categorie) {
-        this.media_id = idMedia;
-        this.titre    = titre;
+        this.mediaId = idMedia;
+        this.titre   = titre;
         this.categorie   = categorie;
     }
 
@@ -75,8 +75,8 @@ public class Media {
      * @param sousCategorie {@link SousCategorie}
      */
     public Media(String idMedia, String titre, String description, Categorie categorie, SousCategorie sousCategorie) {
-        this.media_id = idMedia;
-        this.titre    = titre;
+        this.mediaId = idMedia;
+        this.titre   = titre;
         this.description = description;
         this.categorie     = categorie;
         this.sousCategorie = sousCategorie;
@@ -93,8 +93,8 @@ public class Media {
         totalMediaByYear = dao.countByYear();
     }
 
-    public String getMedia_id() {
-        return this.media_id;
+    public String getMediaId() {
+        return this.mediaId;
     }
 
     /**
@@ -105,7 +105,7 @@ public class Media {
         int currentYearCounter = (totalMediaByYear.get(CURRENT_YEAR) != null) ? totalMediaByYear.get(CURRENT_YEAR) + 1 : 1;
         String ref = String.format("%05d", currentYearCounter);
 
-        this.media_id = CURRENT_YEAR + "-" + CURRENT_MONTH + "-" + ref;
+        this.mediaId = CURRENT_YEAR + "-" + CURRENT_MONTH + "-" + ref;
     }
 
 
@@ -149,7 +149,7 @@ public class Media {
 
     @Override
     public String toString() {
-        return "id='" + media_id + '\'' +
+        return "id='" + mediaId + '\'' +
                "\n Titre:'" + titre + '\'' +
                "\n Description:'" + description + '\'' +
                "\n ___________________________________________________________________________" +
