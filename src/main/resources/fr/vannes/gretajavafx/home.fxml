@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
+   <children>
+      <MenuBar layoutX="159.0" layoutY="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Ajouter">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Inscrit" />
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Média" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" text="Emprunt" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Afficher">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Les medias" />
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Les inscrits" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" text="Les emprunts" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Parametres">
+            <items>
+              <MenuItem fx:id="envoiCouriel" mnemonicParsing="false" onAction="#toSendMail" text="Email" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane layoutY="31.0" prefHeight="369.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="474.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+             <Image url="@../../../images/moulin.JPG" />
+            </ImageView>
+            <TableView fx:id="monTab" layoutX="56.0" layoutY="36.0" prefHeight="279.0" prefWidth="150.0">
+              <columns>
+                <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
+                <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
+              </columns>
+            </TableView>
+            <ListView fx:id="maListe" layoutX="250.0" layoutY="36.0" prefHeight="273.0" prefWidth="165.0" />
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
