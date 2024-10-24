@@ -1,25 +1,31 @@
 package fr.vannes.gretajavafx.controller;
 
 import fr.vannes.gretajavafx.Main;
-import fr.vannes.gretajavafx.model.Personne;
+import fr.vannes.gretajavafx.model.Emprunteur;
+import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAO;
+import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAOImpl;
+import fr.vannes.gretajavafx.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-
 /**
- * classe Controller pour la page d'Accueil
+ * Classe Controller pour la page d'Accueil
  */
 public class HomeController implements Initializable {
 
@@ -27,14 +33,19 @@ public class HomeController implements Initializable {
      * Instance d'HomeController
      */
     private static HomeController app = null;
-    @FXML
-    private ListView maListe;
-    @FXML
-    private TableView monTab;
-    @FXML
-    private TableColumn<Personne, String> prenom,nom;
 
-    private final ObservableList<Personne> obsPersonne= FXCollections.observableArrayList();
+    @FXML
+    private ListView<String> maListe; // Typage de la ListView
+    @FXML
+    private TableView<Emprunteur> monTab; // Typage de la TableView
+    @FXML
+    private TableColumn<Emprunteur, String> prenom, nom;
+
+    @FXML
+    private AnchorPane rootPane;
+
+    private final ObservableList<Emprunteur> obsPersonne = FXCollections.observableArrayList();
+    private EmprunteurDAO emprunteurDAO; // DAO pour interagir avec les emprunteurs
 
     /**
      * Instance unique d'AppController
@@ -46,15 +57,14 @@ public class HomeController implements Initializable {
     }
 
     /**
-     * Method epour l'affichage de la page Accueil
+     * Méthode pour l'affichage de la page Accueil
      *
      * @param w Window
      */
     public void HomeScene(Window w) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.
-                    getResource("home.fxml"));
+            loader.setLocation(Main.class.getResource("home.fxml"));
 
             Scene scene = new Scene(loader.load(), 640, 400);
             Stage stage = (Stage) w;
@@ -63,45 +73,56 @@ public class HomeController implements Initializable {
 
             stage.show();
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * chargement de la liste
+     * Chargement de la liste de noms fictifs
      */
     public void loadListe() {
-       String [] names = {"Julien","Theo","Pascal"};
-
+        String[] names = {"Julien", "Theo", "Pascal"};
         maListe.getItems().addAll(names);
-
-
     }
 
     /**
-     * méthode appelée à l'initialisation de la liste
+     * Méthode appelée à l'initialisation de la liste
+     *
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        app = this; // Initialisation de l'instance
+        /*DAOFactory daoFactory = DAOFactory.getInstance();
+        this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory); // Initialiser le DAO
         loadListe();
-        loadTable();
-    }
-
-    public void loadTable(){
-       obsPersonne.add(new Personne("Dupont", "Jacques"));
-      obsPersonne.add(new Personne("Martin", "Jean"));
-    //cablage des colonnes
-     nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-     prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-      monTab.setItems(obsPersonne);
+        loadTable();*/
     }
 
     /**
-     * dialog de succès
+     * Charger les emprunteurs dans la table
+     */
+    public void loadTable() {
+        try {
+            // Récupérer tous les emprunteurs de la base de données
+            List<Emprunteur> emprunteurs = emprunteurDAO.getAllEmprunteurs();
+            obsPersonne.clear(); // Vider la liste avant de la remplir
+
+            obsPersonne.addAll(emprunteurs); // Ajouter tous les emprunteurs à l'ObservableList
+
+            // Cablage des colonnes
+            nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+            prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+            monTab.setItems(obsPersonne);
+        } catch (Exception e) {
+            errorAlert("Erreur", "Impossible de charger les emprunteurs : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Dialog de succès
      *
      * @param successMessage header message
      * @param contentMessage main content message
@@ -115,7 +136,7 @@ public class HomeController implements Initializable {
     }
 
     /**
-     * dialog d'erreur
+     * Dialog d'erreur
      *
      * @param errMessage     header message
      * @param contentMessage main content message
@@ -138,4 +159,66 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
+    public void ajouterEmprunteur() throws IOException {
+        try {
+            // Charger le FXML pour la vue "ajoutEmprunteur"
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunteur.fxml"));
+            Parent ajoutEmprunteurPane = loader.load();
+
+            // Remplacer le contenu du conteneur rootPane par la vue "ajoutEmprunteur"
+            rootPane.getChildren().clear(); // Effacer les éléments existants
+            rootPane.getChildren().add(ajoutEmprunteurPane); // Ajouter la nouvelle vue
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void ajouterMedia() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutMedia.fxml"));
+            Parent ajoutMediaPane = loader.load();
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(ajoutMediaPane); // Ajouter la nouvelle vue
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout de media : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void ajouterEmprunt() throws IOException {
+        try {
+            // Charger le FXML pour la vue "ajoutEmprunteur"
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunt.fxml"));
+            Parent ajoutEmpruntPane = loader.load();
+
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(ajoutEmpruntPane);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void afficherEmprunteur() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunteur.fxml"));
+            Parent afficherEmprunteurPane = loader.load();
+
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(afficherEmprunteurPane);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
+

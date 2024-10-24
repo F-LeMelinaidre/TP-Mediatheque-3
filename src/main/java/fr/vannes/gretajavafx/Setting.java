@@ -1,13 +1,15 @@
 package fr.vannes.gretajavafx;
 
 public class Setting {
+
     /**
      * Config BDD
      */
-    public static String HOST = "109.234.166.12";
-    public static String BDD = "tima6358_pascal";
-    public static String LOGIN = "tima6358_pascal";
-    public static String PWD = "alanTuring2024!";
+
+    public static String HOST = "jdbc:mysql://localhost:3306/";
+    public static String BDD = "mediatheque";
+    public static String LOGIN = "admin";
+    public static String PWD = "admin";
 
     public static String TYPE_BDD = "mysql";
 
