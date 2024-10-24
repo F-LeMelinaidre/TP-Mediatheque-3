@@ -15,10 +15,10 @@ public class DAOFactory {
 
     private static Connection _connection = null;
 
-    private static final String SQL_SERVER = "jdbc:mysql://109.234.166.12:3306/";
-    private static final String SQL_DATA_BASE = "tima6358_frederic";
-    private static final String SQL_USER = "tima6358_frederic";
-    private static final String SQL_PASS = "alanTuring2024!";
+    public static final String SQL_SERVER = "jdbc:mysql://localhost:3306/";
+    public static final String SQL_DATA_BASE = "mediatheque";
+    public static final String SQL_USER = "admin";
+    public static final String SQL_PASS = "admin";
 
 
     public static DAOFactory getInstance() {

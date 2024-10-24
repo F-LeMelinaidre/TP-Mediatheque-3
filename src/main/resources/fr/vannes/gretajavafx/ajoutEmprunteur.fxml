@@ -3,24 +3,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="fr.vannes.gretajavafx.controller.AjoutEmprunteurController">
-    <children>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
+  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AjoutEmprunteurController">
 
-            <TextField fx:id="nomField" promptText="Nom"/>
-            <TextField fx:id="prenomField" promptText="Prénom"/>
-            <DatePicker fx:id="dateNaissancePicker" promptText="Date de naissance"/>
+                     <TextField fx:id="nomField" promptText="Nom" />
+      <TextField fx:id="prenomField" promptText="Prénom" />
+      <DatePicker fx:id="dateNaissancePicker" promptText="Date de naissance" />
 
-            <Button fx:id="ajouterButton" onAction="#ajouterEmprunteur" text="Ajouter"/>
+                     <Button fx:id="ajouterButton" onAction="#ajouterEmprunteur" text="Ajouter" />
 
-        </VBox>
-    </children>
-</AnchorPane>
+  </VBox>

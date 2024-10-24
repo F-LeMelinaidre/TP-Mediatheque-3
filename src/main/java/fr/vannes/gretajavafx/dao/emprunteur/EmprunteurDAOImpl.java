@@ -16,7 +16,6 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         this.daoFactory = daoFactory;
     }
 
-    // Ajouter un nouvel emprunteur
     public void ajouterEmprunteur(Emprunteur emprunteur) {
         String sql = "INSERT INTO emprunteur (nom, prenom, date_naissance) VALUES (?, ?, ?)";
 

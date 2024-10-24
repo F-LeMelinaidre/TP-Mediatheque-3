@@ -14,7 +14,7 @@
             <items>
               <MenuItem fx:id="ajouterEmprunteur" mnemonicParsing="false" onAction="#ajouterEmprunteur" text="Inscrit" />
               <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="ajouterMedia" mnemonicParsing="false" onAction="#ajouterMedia" text="Média" />
+              <MenuItem fx:id="ajoutMedia" mnemonicParsing="false" onAction="#ajouterMedia" text="Média" />
                 <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem fx:id="ajoutEmprunt" mnemonicParsing="false" onAction="#ajouterEmprunt" text="Emprunt" />
             </items>
@@ -23,7 +23,7 @@
             <items>
               <MenuItem mnemonicParsing="false" text="Les medias" />
               <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" text="Les inscrits" />
+              <MenuItem mnemonicParsing="false" onAction="#afficherEmprunteur" text="Les inscrits" />
                 <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem mnemonicParsing="false" text="Les emprunts" />
             </items>

@@ -175,6 +175,19 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void ajouterMedia() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutMedia.fxml"));
+            Parent ajoutMediaPane = loader.load();
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(ajoutMediaPane); // Ajouter la nouvelle vue
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout de media : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     public void ajouterEmprunt() throws IOException {
         try {
@@ -191,5 +204,21 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void afficherEmprunteur() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunteur.fxml"));
+            Parent afficherEmprunteurPane = loader.load();
+
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(afficherEmprunteurPane);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
 

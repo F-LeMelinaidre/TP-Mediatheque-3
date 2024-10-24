@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 
 import java.util.List;
 
@@ -46,7 +47,6 @@ public class AffichageEmprunteurController {
             for (Emprunteur emprunteur : emprunteurs) {
                 emprunteurNoms.add(emprunteur.getNom() + " " + emprunteur.getPrenom());
             }
-
             // Mettre à jour la ListView avec les noms des emprunteurs
             emprunteurListView.setItems(emprunteurNoms);
 

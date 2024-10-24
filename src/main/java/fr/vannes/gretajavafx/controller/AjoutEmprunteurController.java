@@ -37,7 +37,7 @@ public class AjoutEmprunteurController {
     @FXML
     public void initialize() {
         // Initialisation des éléments si nécessaire
-        this.ajouterEmprunteur();
+        //this.ajouterEmprunteur();
     }
 
     @FXML
@@ -47,21 +47,16 @@ public class AjoutEmprunteurController {
         LocalDate dateNaissance = dateNaissancePicker.getValue();
 
         if (nom.isEmpty() || prenom.isEmpty() || dateNaissance == null) {
-            // Afficher une alerte si les champs ne sont pas remplis correctement
             afficherAlerte("Champs manquants", "Veuillez remplir tous les champs.");
             return;
         }
 
-        // Créer un nouvel emprunteur
         Emprunteur nouvelEmprunteur = new Emprunteur(nom, prenom, dateNaissance, null);
 
-        // Ajouter l'emprunteur à la base de données
         emprunteurDAO.ajouterEmprunteur(nouvelEmprunteur);
 
-        // Afficher une alerte de confirmation
         afficherAlerte("Succès", "L'emprunteur a été ajouté avec succès.");
 
-        // Réinitialiser les champs
         reinitialiserChamps();
     }
 
