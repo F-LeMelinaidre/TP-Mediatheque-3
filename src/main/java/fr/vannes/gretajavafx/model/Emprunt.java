@@ -3,57 +3,57 @@ package fr.vannes.gretajavafx.model;
 import java.time.LocalDate;
 
 public class Emprunt {
-    private int emprunteur_id;
-    private int media_id;
-    private LocalDate date_emprunt;
-    private LocalDate date_retour;
+    private int emprunteurId;
+    private int mediaId;
+    private LocalDate dateEmprunt;
+    private LocalDate dateRetour;
 
-    public Emprunt(int emprunteur_id, int media_id, LocalDate date_emprunt, LocalDate date_retour) {
+    public Emprunt(int emprunteur_id, int mediaId, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.emprunteurId = emprunteur_id;
-        this.media_id = media_id;
-        this.date_emprunt = date_emprunt;
-        this.date_retour = date_retour;
+        this.mediaId = mediaId;
+        this.dateEmprunt = dateEmprunt;
+        this.dateRetour = dateRetour;
     }
 
-    public int getEmprunteur_id() {
-        return emprunteur_id;
+    public int getEmprunteurId() {
+        return emprunteurId;
     }
 
-    public void setEmprunteur_id(int emprunteur_id) {
-        this.emprunteur_id = emprunteur_id;
+    public void setEmprunteurId(int emprunteurId) {
+        this.emprunteurId = emprunteurId;
     }
 
-    public int getMedia_id() {
-        return media_id;
+    public int getMediaId() {
+        return mediaId;
     }
 
-    public void setMedia_id(int media_id) {
-        this.media_id = media_id;
+    public void setMediaId(int mediaId) {
+        this.mediaId = mediaId;
     }
 
-    public LocalDate getDate_emprunt() {
-        return date_emprunt;
+    public LocalDate getDateEmprunt() {
+        return dateEmprunt;
     }
 
-    public void setDate_emprunt(LocalDate date_emprunt) {
-        this.date_emprunt = date_emprunt;
+    public void setDateEmprunt(LocalDate dateEmprunt) {
+        this.dateEmprunt = dateEmprunt;
     }
 
-    public LocalDate getDate_retour() {
-        return date_retour;
+    public LocalDate getDateRetour() {
+        return dateRetour;
     }
 
-    public void setDate_retour(LocalDate date_retour) {
-        this.date_retour = date_retour;
+    public void setDateRetour(LocalDate dateRetour) {
+        this.dateRetour = dateRetour;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Emprunt{");
-        sb.append("emprunteur_id=").append(emprunteur_id);
-        sb.append(", media_id=").append(media_id);
-        sb.append(", date_emprunt=").append(date_emprunt);
-        sb.append(", date_retour=").append(date_retour);
+        sb.append("emprunteur_id=").append(emprunteurId);
+        sb.append(", mediaId=").append(mediaId);
+        sb.append(", dateEmprunt=").append(dateEmprunt);
+        sb.append(", dateRetour=").append(dateRetour);
         sb.append('}');
         return sb.toString();
     }

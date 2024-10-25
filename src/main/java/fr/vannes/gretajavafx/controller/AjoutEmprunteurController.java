@@ -31,7 +31,7 @@ public class AjoutEmprunteurController {
 
     public AjoutEmprunteurController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory);
+        this.emprunteurDAO = EmprunteurDAOImpl.get_instance(daoFactory);
     }
 
     @FXML

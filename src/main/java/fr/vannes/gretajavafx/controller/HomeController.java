@@ -247,12 +247,11 @@ public class HomeController implements Initializable {
         Parent afficherEmpruntPane = loader.load();
 
         rootPane.getChildren().clear();
-        rootPane.getChildren().add(afficherMediaPane);
-
-        AnchorPane.setBottomAnchor(afficherMediaPane, 0.0);
-        AnchorPane.setLeftAnchor(afficherMediaPane, 0.0);
-        AnchorPane.setRightAnchor(afficherMediaPane, 0.0);
-        AnchorPane.setTopAnchor(afficherMediaPane, 0.0);
+        rootPane.getChildren().add(afficherEmpruntPane);
+        AnchorPane.setBottomAnchor(afficherEmpruntPane, 0.0);
+        AnchorPane.setLeftAnchor(afficherEmpruntPane, 0.0);
+        AnchorPane.setRightAnchor(afficherEmpruntPane, 0.0);
+        AnchorPane.setTopAnchor(afficherEmpruntPane, 0.0);
     }
 
 }

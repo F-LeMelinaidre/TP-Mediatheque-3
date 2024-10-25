@@ -50,7 +50,7 @@ public class Emprunteur {
         this.prenom = prenom;
     }
 
-    public LocalDate getDate_naissance() {
+    public LocalDate getDateNaissance() {
         return date_naissance;
     }
 

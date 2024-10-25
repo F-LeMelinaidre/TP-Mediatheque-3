@@ -7,39 +7,25 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static fr.vannes.gretajavafx.dao.Config.*;
+
 public class CategorieDAOImpl implements CategorieDAO<Categorie> {
 
     private static CategorieDAOImpl _instance = null;
     private static Connection _conn = null;
     private static DAOFactory _df;
-    private static final String CATEGORY_ID = "category_id";
-    private static final String LABEL = "label";
-
-    private String INSERT = "INSERT INTO category (label) VALUES (?)";
-    private String READONE = "SELECT c.category_id, c.label, " +
-                             "FROM category c " +
-                             "WHERE category_id = ?";
-    private String READALL = "SELECT c.category_id, c.label " +
-                             "FROM category c " +
-                             "ORDER BY c.label ASC";
-
-    private String UPDATE = "UPDATE category SET label = ? WHERE category_id = ?";
-    ;
-    private String DELETE = "DELETE FROM category WHERE category_id = ?";
 
     private CategorieDAOImpl(DAOFactory df) throws SQLException {
         try {
-            this._conn = df.getConnection();
+            _conn = df.getConnection();
         } catch (SQLException e) {
             throw new SQLException("Probleme driver manager ou acces bdd !!");
         }
-
     }
 
     public static CategorieDAOImpl get_instance() {
         if (_instance == null) {
             try {
-
                 _df       = DAOFactory.getInstance();
                 _instance = new CategorieDAOImpl(_df);
 
@@ -48,9 +34,7 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
         return _instance;
     }
 
