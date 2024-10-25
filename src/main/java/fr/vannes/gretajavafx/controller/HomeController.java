@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -228,10 +229,30 @@ public class HomeController implements Initializable {
             rootPane.getChildren().clear();
             rootPane.getChildren().add(afficherMediaPane);
 
+            AnchorPane.setBottomAnchor(afficherMediaPane, 0.0);
+            AnchorPane.setLeftAnchor(afficherMediaPane, 0.0);
+            AnchorPane.setRightAnchor(afficherMediaPane, 0.0);
+            AnchorPane.setTopAnchor(afficherMediaPane, 0.0);
+
+
+
         } catch (IOException e) {
             errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void afficherEmprunt() throws IOException {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunt.fxml"));
+        Parent afficherEmpruntPane = loader.load();
+
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(afficherMediaPane);
+
+        AnchorPane.setBottomAnchor(afficherMediaPane, 0.0);
+        AnchorPane.setLeftAnchor(afficherMediaPane, 0.0);
+        AnchorPane.setRightAnchor(afficherMediaPane, 0.0);
+        AnchorPane.setTopAnchor(afficherMediaPane, 0.0);
     }
 
 }

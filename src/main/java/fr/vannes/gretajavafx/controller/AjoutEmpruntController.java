@@ -33,7 +33,7 @@ public class AjoutEmpruntController {
 
     public AjoutEmpruntController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        this.empruntDAO = new EmpruntDAOImpl(daoFactory);
+        this.empruntDAO = EmpruntDAOImpl.get_instance(daoFactory);
     }
 
     @FXML

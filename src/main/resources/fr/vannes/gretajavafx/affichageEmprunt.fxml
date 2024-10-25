@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Alert?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="fr.vannes.gretajavafx.controller.AffichageEmpruntController">
-
-    <ListView fx:id="listViewEmprunts" />
-
-</VBox>
-
+<TableView fx:id="empruntTableView" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="fr.vannes.gretajavafx.controller.affichageEmpruntController">
+  <columns>
+    <TableColumn fx:id="idEmpruntColumn" prefWidth="75.0" text="Référence" />
+    <TableColumn fx:id="titreMediaColumn" prefWidth="75.0" text="Titre" />
+      <TableColumn fx:id="categorieMediaColumn" prefWidth="75.0" text="Categorie" />
+      <TableColumn fx:id="dateEmpruntColumn" prefWidth="101.5999755859375" text="Date emprunt" />
+      <TableColumn fx:id="dateRetourEmpruntColumn" prefWidth="75.0" text="Date retour" />
+  </columns>
+</TableView>

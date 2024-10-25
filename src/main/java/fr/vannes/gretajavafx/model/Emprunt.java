@@ -9,7 +9,7 @@ public class Emprunt {
     private LocalDate date_retour;
 
     public Emprunt(int emprunteur_id, int media_id, LocalDate date_emprunt, LocalDate date_retour) {
-        this.emprunteur_id = emprunteur_id;
+        this.emprunteurId = emprunteur_id;
         this.media_id = media_id;
         this.date_emprunt = date_emprunt;
         this.date_retour = date_retour;

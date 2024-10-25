@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
 
-<TableView fx:id="mediaTableView" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AffichageMediaController" />
+<TableView fx:id="mediaTableView" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AffichageMediaController">
+   <columns>
+      <TableColumn fx:id="identifiantColumn" prefWidth="-1.0" text="Identifiant" />
+      <TableColumn fx:id="titreColumn" prefWidth="-1.0" text="Titre" />
+      <TableColumn fx:id="categorieColumn" prefWidth="-1.0" text="Catégorie" />
+      <TableColumn fx:id="sousCategorieColumn" prefWidth="-1.0" text="Sous-catégorie" />
+   </columns>
+   <columnResizePolicy>
+      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+   </columnResizePolicy>
+</TableView>

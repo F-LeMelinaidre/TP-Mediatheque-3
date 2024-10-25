@@ -2,6 +2,7 @@ package fr.vannes.gretajavafx.dao.emprunt;
 
 
 import fr.vannes.gretajavafx.dao.DAOFactory;
+import fr.vannes.gretajavafx.dao.media.MediaDAOImpl;
 import fr.vannes.gretajavafx.model.Emprunt;
 
 import java.sql.*;
@@ -11,16 +12,43 @@ import java.util.List;
 
 public class EmpruntDAOImpl implements EmpruntDAO {
 
-    private DAOFactory daoFactory;
 
-    public EmpruntDAOImpl(DAOFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    private static EmpruntDAOImpl _instance = null;
+    private static Connection _conn = null;
+    private static DAOFactory _df;
+
+    private EmpruntDAOImpl(DAOFactory df) throws SQLException {
+        try {
+            _conn = df.getConnection();
+        } catch (SQLException e) {
+            throw new SQLException("Probleme driver manager ou acces bdd !!");
+        }
+
+    }
+
+    public static EmpruntDAOImpl get_instance(DAOFactory df)
+    {
+        if (_instance == null) {
+            try {
+                _df = df;
+                _instance = new EmpruntDAOImpl(_df);
+            } catch (SQLException e) {
+                System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+                // Lancer une RuntimeException
+                throw new RuntimeException("Erreur lors de l'initialisation de MediaDAOImpl", e);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Erreur inconnue lors de l'initialisation de MediaDAOImpl", e);
+            }
+        }
+
+        return _instance;
     }
 
     @Override
     public void ajouterEmprunt(Emprunt emprunt) throws Exception {
         String query = "INSERT INTO emprunt (emprunteur_id, media_id, date_emprunt, date_retour) VALUES (?, ?, ?, ?)";
-        try (Connection connection = daoFactory.getConnection();
+        try (Connection connection = _df.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, emprunt.getEmprunteur_id());
@@ -36,7 +64,7 @@ public class EmpruntDAOImpl implements EmpruntDAO {
     @Override
     public void mettreAJourEmprunt(Emprunt emprunt) throws Exception {
         String query = "UPDATE emprunt SET date_emprunt = ?, date_retour = ? WHERE emprunteur_id = ? AND media_id = ?";
-        try (Connection connection = daoFactory.getConnection();
+        try (Connection connection = _df.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setDate(1, Date.valueOf(emprunt.getDate_emprunt()));
@@ -52,7 +80,7 @@ public class EmpruntDAOImpl implements EmpruntDAO {
     @Override
     public void supprimerEmprunt(int emprunteur_id, int media_id) throws Exception {
         String query = "DELETE FROM emprunt WHERE emprunteur_id = ? AND media_id = ?";
-        try (Connection connection = daoFactory.getConnection();
+        try (Connection connection = _df.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, emprunteur_id);
@@ -66,7 +94,7 @@ public class EmpruntDAOImpl implements EmpruntDAO {
     @Override
     public Emprunt getEmpruntById(int emprunteur_id, int media_id) throws Exception {
         String query = "SELECT * FROM emprunt WHERE emprunteur_id = ? AND media_id = ?";
-        try (Connection connection = daoFactory.getConnection();
+        try (Connection connection = _df.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, emprunteur_id);
@@ -89,7 +117,7 @@ public class EmpruntDAOImpl implements EmpruntDAO {
     public List<Emprunt> getTousLesEmprunts() throws Exception {
         List<Emprunt> emprunts = new ArrayList<>();
         String query = "SELECT * FROM emprunt";
-        try (Connection connection = daoFactory.getConnection();
+        try (Connection connection = _df.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
