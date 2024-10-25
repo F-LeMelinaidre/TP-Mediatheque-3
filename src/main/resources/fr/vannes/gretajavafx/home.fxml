@@ -5,36 +5,40 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
+
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
    <children>
-      <MenuBar layoutX="159.0" layoutY="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Ajouter">
-            <items>
-              <MenuItem fx:id="ajouterEmprunteur" mnemonicParsing="false" onAction="#ajouterEmprunteur" text="Inscrit" />
-              <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="ajoutMedia" mnemonicParsing="false" onAction="#ajouterMedia" text="Média" />
-                <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem fx:id="ajoutEmprunt" mnemonicParsing="false" onAction="#ajouterEmprunt" text="Emprunt" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Afficher">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Les medias" />
-              <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" onAction="#afficherEmprunteur" text="Les inscrits" />
-                <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem mnemonicParsing="false" text="Les emprunts" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Parametres">
-            <items>
-              <MenuItem fx:id="envoiCouriel" mnemonicParsing="false" onAction="#toSendMail" text="Email" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <AnchorPane fx:id="rootPane" layoutY="31.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="Ajouter">
+                    <items>
+                        <MenuItem fx:id="ajouterEmprunteur" mnemonicParsing="false" onAction="#ajouterEmprunteur" text="Inscrit" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="ajoutMedia" mnemonicParsing="false" onAction="#ajouterMedia" text="Média" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="ajoutEmprunt" mnemonicParsing="false" onAction="#ajouterEmprunt" text="Emprunt" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Afficher">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#afficherMedia" text="Les medias" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#afficherEmprunteur" text="Les inscrits" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Les emprunts" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Parametres">
+                    <items>
+                        <MenuItem fx:id="envoiCouriel" mnemonicParsing="false" onAction="#toSendMail" text="Email" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane fx:id="rootPane">
+
+        </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>

@@ -220,5 +220,19 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void afficherMedia() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageMedia.fxml"));
+            Parent afficherMediaPane = loader.load();
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(afficherMediaPane);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
 

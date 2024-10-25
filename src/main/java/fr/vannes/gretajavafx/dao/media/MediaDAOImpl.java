@@ -40,6 +40,7 @@ public class MediaDAOImpl implements MediaDAO<Media> {
     private static final String READALL = "SELECT m.media_id, m.title, m.description, " +
                                           "c.category_id AS category_id, c.label AS category_label, " +
                                           "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
+                                          "FROM media AS m " +
                                           "LEFT JOIN category c ON m.category_id = c.category_id " +
                                           "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id " +
                                           "ORDER BY m.media_id DESC";
@@ -57,19 +58,20 @@ public class MediaDAOImpl implements MediaDAO<Media> {
 
     }
 
-    public static MediaDAOImpl get_instance() {
+    public static MediaDAOImpl get_instance(DAOFactory df)
+    {
         if (_instance == null) {
             try {
-
-                _df       = DAOFactory.getInstance();
+                _df = df;
                 _instance = new MediaDAOImpl(_df);
-
             } catch (SQLException e) {
                 System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+                // Lancer une RuntimeException
+                throw new RuntimeException("Erreur lors de l'initialisation de MediaDAOImpl", e);
             } catch (Exception e) {
                 e.printStackTrace();
+                throw new RuntimeException("Erreur inconnue lors de l'initialisation de MediaDAOImpl", e);
             }
-
         }
 
         return _instance;

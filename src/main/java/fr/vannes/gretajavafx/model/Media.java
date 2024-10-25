@@ -6,8 +6,10 @@
 
 package fr.vannes.gretajavafx.model;
 
+import fr.vannes.gretajavafx.dao.DAOFactory;
 import fr.vannes.gretajavafx.dao.media.MediaDAOImpl;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import static fr.vannes.gretajavafx.controller.Configuration.CURRENT_MONTH;
@@ -87,8 +89,10 @@ public class Media {
      * {@code totalMedia}: total de l'essemeble des média en bd.
      * {@code totalMediaByYear}: {@code Map} des totaux des medias classés par années.
      */
-    public void initCounter() {
-        MediaDAOImpl dao = MediaDAOImpl.get_instance();
+    public void initCounter()
+    {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        MediaDAOImpl dao = MediaDAOImpl.get_instance(daoFactory);
         totalMedia = dao.count();
         totalMediaByYear = dao.countByYear();
     }
@@ -139,12 +143,20 @@ public class Media {
         this.categorie = categorie;
     }
 
+    public String getCategorieLabel() {
+        return categorie.getLabel();
+    }
+
     public SousCategorie getSousCategorie() {
         return sousCategorie;
     }
 
     public void setSousCategorie(SousCategorie sousCategorie) {
         this.sousCategorie = sousCategorie;
+    }
+
+    public String getSousCategorieLabel() {
+        return sousCategorie.getLabel();
     }
 
     @Override
