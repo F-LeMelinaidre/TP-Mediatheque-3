@@ -53,11 +53,8 @@ public class AffichageMediaController
             medias.addAll(mediaList);
 
             this.identifiantColumn.setCellValueFactory(new PropertyValueFactory<>("mediaId"));
-
             this.titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
-
             this.categorieColumn.setCellValueFactory(new PropertyValueFactory<>("categorieLabel"));
-
             this.sousCategorieColumn.setCellValueFactory(new PropertyValueFactory<>("sousCategorieLabel"));
 
             mediaTableView.setItems(medias);

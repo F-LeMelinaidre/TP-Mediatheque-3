@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 
 
-<TableView fx:id="mediaTableView" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AffichageMediaController">
+<TableView fx:id="mediaTableView" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AffichageMediaController">
    <columns>
       <TableColumn fx:id="identifiantColumn" prefWidth="-1.0" text="Identifiant" />
       <TableColumn fx:id="titreColumn" prefWidth="-1.0" text="Titre" />

@@ -52,7 +52,7 @@ public class SousCategorieDAOImpl implements SousCategorieDAO<SousCategorie> {
     @Override
     public ArrayList<SousCategorie> findAll() {
         ArrayList<SousCategorie> subCategoriesList = new ArrayList<>();
-        String sql = "SELECT sc.sous_categorie_id, sc.label " + "FROM sous_categorie sc " + "ORDER BY sc.label ASC";
+        String sql = "SELECT sc.sous_categorie_id, sc.label " + "FROM sous_categorie sc " + "ORDER BY sc.label";
         ResultSet rs = null;
 
         try (PreparedStatement statement = _conn.prepareStatement(sql)) {
@@ -87,7 +87,7 @@ public class SousCategorieDAOImpl implements SousCategorieDAO<SousCategorie> {
                      "INNER JOIN category_has_subcategory chs ON sc.sous_categorie_id = chs.sous_categorie_id " +
                      "INNER JOIN categorie c ON chs.categorie_id = c.categorie_id " +
                      "WHERE c.categorie_id = ? " +
-                     "ORDER BY sc.label ASC";
+                     "ORDER BY sc.label";
         ResultSet rs = null;
 
         try (PreparedStatement statement = _conn.prepareStatement(sql)) {

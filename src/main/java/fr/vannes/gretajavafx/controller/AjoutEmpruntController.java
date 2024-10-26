@@ -15,21 +15,21 @@ import java.time.LocalDate;
 public class AjoutEmpruntController {
 
     @FXML
-    private TextField emprunteurIdField; // Champ pour ID de l'emprunteur
+    private TextField emprunteurIdField;
 
     @FXML
-    private TextField mediaIdField; // Champ pour ID du média
+    private TextField mediaIdField;
 
     @FXML
-    private DatePicker dateEmpruntField; // Champ pour la date d'emprunt
+    private DatePicker dateEmpruntField;
 
     @FXML
-    private DatePicker dateRetourField; // Champ pour la date de retour
+    private DatePicker dateRetourField;
 
     @FXML
-    private Button ajouterButton; // Bouton pour ajouter l'emprunt
+    private Button ajouterButton;
 
-    private EmpruntDAO empruntDAO; // DAO pour interagir avec la base de données
+    private EmpruntDAO empruntDAO;
 
     public AjoutEmpruntController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
@@ -38,49 +38,42 @@ public class AjoutEmpruntController {
 
     @FXML
     public void initialize() {
-        // Initialisation si nécessaire
+
     }
 
     @FXML
     private void ajouterEmprunt() {
         String emprunteurIdText = emprunteurIdField.getText();
-        String mediaIdText = mediaIdField.getText();
+        String mediaId = mediaIdField.getText();
         LocalDate dateEmprunt = dateEmpruntField.getValue();
         LocalDate dateRetour = dateRetourField.getValue();
 
-        // Vérification des champs obligatoires
-        if (emprunteurIdText.isEmpty() || mediaIdText.isEmpty() || dateEmprunt == null || dateRetour == null) {
+        if (emprunteurIdText.isEmpty() || mediaId.isEmpty() || dateEmprunt == null || dateRetour == null) {
             afficherAlerte("Champs manquants", "Veuillez remplir tous les champs.");
             return;
         }
 
         int emprunteurId;
-        int mediaId;
 
         try {
-            // Convertir les textes en entiers
             emprunteurId = Integer.parseInt(emprunteurIdText);
-            mediaId = Integer.parseInt(mediaIdText);
         } catch (NumberFormatException e) {
             afficherAlerte("Erreur de saisie", "Les IDs doivent être des nombres entiers.");
             return;
         }
 
-        // Créer l'objet Emprunt
         Emprunt nouvelEmprunt = new Emprunt(emprunteurId, mediaId, dateEmprunt, dateRetour);
 
         try {
-            // Ajouter l'emprunt à la base de données
             empruntDAO.ajouterEmprunt(nouvelEmprunt);
             afficherAlerte("Succès", "Emprunt ajouté avec succès !");
-            resetFields(); // Réinitialiser les champs après l'ajout
+            resetFields();
         } catch (Exception e) {
             afficherAlerte("Erreur", "Une erreur s'est produite lors de l'ajout de l'emprunt : " + e.getMessage());
         }
     }
 
     private void afficherAlerte(String titre, String message) {
-        // Méthode pour afficher une alerte d'erreur ou d'information
         Alert alerte = new Alert(Alert.AlertType.INFORMATION);
         alerte.setTitle(titre);
         alerte.setHeaderText(null);
@@ -89,7 +82,6 @@ public class AjoutEmpruntController {
     }
 
     private void resetFields() {
-        // Méthode pour réinitialiser les champs de saisie
         emprunteurIdField.clear();
         mediaIdField.clear();
         dateEmpruntField.setValue(null);

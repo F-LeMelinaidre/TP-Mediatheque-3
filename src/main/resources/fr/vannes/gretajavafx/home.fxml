@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
+<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
    <children>
         <MenuBar>
             <menus>
@@ -26,7 +26,7 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#afficherEmprunteur" text="Les inscrits" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Les emprunts" />
+                        <MenuItem mnemonicParsing="false" onAction="#afficherEmprunt" text="Les emprunts" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Parametres">

@@ -3,12 +3,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<TableView fx:id="empruntTableView" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="fr.vannes.gretajavafx.controller.affichageEmpruntController">
-  <columns>
-    <TableColumn fx:id="idEmpruntColumn" prefWidth="75.0" text="Référence" />
-    <TableColumn fx:id="titreMediaColumn" prefWidth="75.0" text="Titre" />
-      <TableColumn fx:id="categorieMediaColumn" prefWidth="75.0" text="Categorie" />
-      <TableColumn fx:id="dateEmpruntColumn" prefWidth="101.5999755859375" text="Date emprunt" />
-      <TableColumn fx:id="dateRetourEmpruntColumn" prefWidth="75.0" text="Date retour" />
-  </columns>
+<TableView fx:id="empruntTableView" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AffichageEmpruntController">
+    <columns>
+        <TableColumn fx:id="dateEmpruntColumn" editable="false" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="Date emprunt" />
+        <TableColumn fx:id="dateRetourEmpruntColumn" editable="false" minWidth="-Infinity" prefWidth="75.0" resizable="false" text="Date retour" />
+      <TableColumn fx:id="identifiantEmprunteurColumn" prefWidth="75.0" text="Identifiant" />
+      <TableColumn fx:id="identiteEmprunteurColumn" prefWidth="75.0" text="Nom Prénom" />
+        <TableColumn fx:id="idMediaColumn" editable="false" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="Référence" />
+        <TableColumn fx:id="titreMediaColumn" editable="false" minWidth="-Infinity" prefWidth="200.0" resizable="false" text="Titre" />
+        <TableColumn fx:id="categorieMediaColumn" editable="false" minWidth="-Infinity" prefWidth="75.0" resizable="false" text="Categorie" />
+    </columns>
 </TableView>

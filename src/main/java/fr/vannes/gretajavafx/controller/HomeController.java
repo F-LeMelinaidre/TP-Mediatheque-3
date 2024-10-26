@@ -160,15 +160,14 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    public void ajouterEmprunteur() throws IOException {
+    public void ajouterEmprunteur() {
         try {
-            // Charger le FXML pour la vue "ajoutEmprunteur"
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunteur.fxml"));
             Parent ajoutEmprunteurPane = loader.load();
 
-            // Remplacer le contenu du conteneur rootPane par la vue "ajoutEmprunteur"
-            rootPane.getChildren().clear(); // Effacer les éléments existants
-            rootPane.getChildren().add(ajoutEmprunteurPane); // Ajouter la nouvelle vue
+
+            rootPane.getChildren().clear();
+            rootPane.getChildren().add(ajoutEmprunteurPane);
 
         } catch (IOException e) {
             errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
@@ -176,7 +175,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void ajouterMedia() throws IOException {
+    public void ajouterMedia() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutMedia.fxml"));
             Parent ajoutMediaPane = loader.load();
@@ -190,7 +189,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void ajouterEmprunt() throws IOException {
+    public void ajouterEmprunt() {
         try {
             // Charger le FXML pour la vue "ajoutEmprunteur"
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunt.fxml"));
@@ -206,11 +205,10 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void afficherEmprunteur() throws IOException {
+    public void afficherEmprunteur() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunteur.fxml"));
             Parent afficherEmprunteurPane = loader.load();
-
 
             rootPane.getChildren().clear();
             rootPane.getChildren().add(afficherEmprunteurPane);
@@ -221,7 +219,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    public void afficherMedia() throws IOException {
+    public void afficherMedia() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageMedia.fxml"));
             Parent afficherMediaPane = loader.load();
@@ -234,15 +232,14 @@ public class HomeController implements Initializable {
             AnchorPane.setRightAnchor(afficherMediaPane, 0.0);
             AnchorPane.setTopAnchor(afficherMediaPane, 0.0);
 
-
-
         } catch (IOException e) {
             errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void afficherEmprunt() throws IOException {
+    public void afficherEmprunt() {
+        try {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunt.fxml"));
         Parent afficherEmpruntPane = loader.load();
 
@@ -252,6 +249,11 @@ public class HomeController implements Initializable {
         AnchorPane.setLeftAnchor(afficherEmpruntPane, 0.0);
         AnchorPane.setRightAnchor(afficherEmpruntPane, 0.0);
         AnchorPane.setTopAnchor(afficherEmpruntPane, 0.0);
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunt : " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }

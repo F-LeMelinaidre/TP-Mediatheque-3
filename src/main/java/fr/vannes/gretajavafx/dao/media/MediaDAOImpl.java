@@ -23,16 +23,16 @@ public class MediaDAOImpl implements MediaDAO<Media>
     private static final String INSERT = "INSERT INTO media (media_id, titre, description, categorie_id, sous_categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String READONE = "SELECT m.media_id, m.titre, m.description, " +
-                                          "c.categorie_id AS categorie_id, c.label AS categorieLabel, " +
-                                          "sc.sous_categorie_id AS sous_categorie_id, sc.label AS sousCategorieLabel " +
+                                          "c.categorie_id AS categorieId, c.label AS categorieLabel, " +
+                                          "sc.sous_categorie_id AS sousCategorieId, sc.label AS sousCategorieLabel " +
                                           "FROM media AS m " +
                                           "LEFT JOIN categorie c ON m.categorie_id = c.categorie_id " +
                                           "LEFT JOIN sous_categorie sc ON m.sous_categorie_id = sc.sous_categorie_id  " +
                                           "WHERE m.media_id = ?";
 
     private static final String READALL = "SELECT m.media_id, m.titre, m.description, " +
-                                          "c.categorie_id AS categorie_id, c.label AS categorieLabel, " +
-                                          "sc.sous_categorie_id AS sous_categorie_id, sc.label AS sousCategorieLabel " +
+                                          "c.categorie_id AS categorieId, c.label AS categorieLabel, " +
+                                          "sc.sous_categorie_id AS sousCategorieId, sc.label AS sousCategorieLabel " +
                                           "FROM media AS m " +
                                           "LEFT JOIN categorie c ON m.categorie_id = c.categorie_id " +
                                           "LEFT JOIN sous_categorie sc ON m.sous_categorie_id = sc.sous_categorie_id " +
@@ -166,9 +166,7 @@ public class MediaDAOImpl implements MediaDAO<Media>
                 String title = rs.getString("titre");
                 String description = rs.getString("description");
 
-                media = new Media(media_id, title, description);
-                media.setCategorie(this.getCategorie(rs));
-                media.setSousCategorie(this.getSousCategorie(rs));
+                media = new Media(media_id, title, description, this.getCategorie(rs), this.getSousCategorie(rs));
             }
 
         } catch (SQLException e) {
@@ -271,9 +269,9 @@ public class MediaDAOImpl implements MediaDAO<Media>
     {
         Categorie categorie = null;
 
-        if (rs.getInt("categorie_id") > 0) {
-            int categorie_id = rs.getInt("categorie_id");
-            String categorieLabel = rs.getString("label");
+        if (rs.getInt("categorieId") > 0) {
+            int categorie_id = rs.getInt("categorieId");
+            String categorieLabel = rs.getString("categorieLabel");
 
             categorie = new Categorie(categorie_id, categorieLabel);
         }
@@ -286,9 +284,9 @@ public class MediaDAOImpl implements MediaDAO<Media>
     {
         SousCategorie sousCategorie = null;
 
-        if (rs.getInt("sous_categorie_id") > 0) {
-            int sousCategorieId = rs.getInt("sous_categorie_id");
-            String sousCategorieLabel = rs.getString("label");
+        if (rs.getInt("sousCategorieId") > 0) {
+            int sousCategorieId = rs.getInt("sousCategorieId");
+            String sousCategorieLabel = rs.getString("sousCategorieLabel");
 
             sousCategorie = new SousCategorie(sousCategorieId, sousCategorieLabel);
         }

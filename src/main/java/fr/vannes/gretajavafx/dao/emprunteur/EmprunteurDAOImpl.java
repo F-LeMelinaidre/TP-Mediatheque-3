@@ -1,7 +1,6 @@
 package fr.vannes.gretajavafx.dao.emprunteur;
 
 import fr.vannes.gretajavafx.dao.DAOFactory;
-import fr.vannes.gretajavafx.dao.media.MediaDAOImpl;
 import fr.vannes.gretajavafx.model.Emprunteur;
 
 import java.sql.*;
@@ -57,7 +56,7 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
                 try {
                     generatedKeys = statement.getGeneratedKeys();
                     if (generatedKeys.next()) {
-                        emprunteur.setEmprunteur_id(generatedKeys.getInt(1));
+                        emprunteur.setEmprunteurId(generatedKeys.getInt(1));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -143,7 +142,7 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
             statement.setString(1, emprunteur.getNom());
             statement.setString(2, emprunteur.getPrenom());
             statement.setDate(3, Date.valueOf(emprunteur.getDateNaissance()));
-            statement.setInt(4, emprunteur.getEmprunteur_id());
+            statement.setInt(4, emprunteur.getEmprunteurId());
             statement.executeUpdate();
 
         } catch (SQLException e) {

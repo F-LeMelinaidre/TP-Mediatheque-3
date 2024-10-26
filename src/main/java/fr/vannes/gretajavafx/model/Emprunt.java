@@ -4,15 +4,26 @@ import java.time.LocalDate;
 
 public class Emprunt {
     private int emprunteurId;
-    private int mediaId;
+    private String mediaId;
     private LocalDate dateEmprunt;
     private LocalDate dateRetour;
+    private Emprunteur emprunteur;
+    private Media media;
 
-    public Emprunt(int emprunteur_id, int mediaId, LocalDate dateEmprunt, LocalDate dateRetour) {
+    public Emprunt(int emprunteur_id, String mediaId, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.emprunteurId = emprunteur_id;
         this.mediaId = mediaId;
         this.dateEmprunt = dateEmprunt;
         this.dateRetour = dateRetour;
+    }
+
+    public Emprunt(int emprunteurId, String mediaId, LocalDate dateEmprunt, LocalDate dateRetour, Emprunteur emprunteur, Media media) {
+        this.emprunteurId = emprunteurId;
+        this.mediaId = mediaId;
+        this.dateEmprunt = dateEmprunt;
+        this.dateRetour = dateRetour;
+        this.emprunteur = emprunteur;
+        this.media = media;
     }
 
     public int getEmprunteurId() {
@@ -23,12 +34,28 @@ public class Emprunt {
         this.emprunteurId = emprunteurId;
     }
 
-    public int getMediaId() {
+    public Emprunteur getEmprunteur() {
+        return this.emprunteur;
+    }
+
+    public void setEmprunteur(Emprunteur emprunteur) {
+        this.emprunteur = emprunteur;
+    }
+
+    public String getMediaId() {
         return mediaId;
     }
 
-    public void setMediaId(int mediaId) {
+    public void setMediaId(String mediaId) {
         this.mediaId = mediaId;
+    }
+
+    public Media getMedia() {
+        return this.media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
     }
 
     public LocalDate getDateEmprunt() {
@@ -50,7 +77,7 @@ public class Emprunt {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Emprunt{");
-        sb.append("emprunteur_id=").append(emprunteurId);
+        sb.append("emprunteurId=").append(emprunteurId);
         sb.append(", mediaId=").append(mediaId);
         sb.append(", dateEmprunt=").append(dateEmprunt);
         sb.append(", dateRetour=").append(dateRetour);
