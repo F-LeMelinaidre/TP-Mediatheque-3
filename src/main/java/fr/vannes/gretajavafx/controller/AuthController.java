@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 /**
  * Classe Controller pour la partie authentification
  */
-public class AuthController {
+public class AuthController
+{
     @FXML
     private TextField login;
 
@@ -26,7 +27,8 @@ public class AuthController {
     /**
      * mis à blanc des champs
      */
-    public void onClearClick() {
+    public void onClearClick()
+    {
         login.clear();
         pwd.clear();
     }
@@ -34,29 +36,31 @@ public class AuthController {
     /**
      * Fermeture de l'app
      */
-    public void onCloseClick() {
+    public void onCloseClick()
+    {
         Platform.exit();
     }
 
     /**
      * Gestion de l'authentification
      */
-    public void onValidateClick() {
-        if (login.getText().equals(Configuration.login)
-                && CryptPWD.getSHA512SecurePassword(pwd.getText()).equals(Configuration.password)) {
-            try {
-                HomeController homeController=new HomeController();
-               homeController.HomeScene(valider.getScene().getWindow());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public void onValidateClick()
+    {
+        try {
+            HomeController homeController = new HomeController();
+            homeController.HomeScene(valider.getScene().getWindow());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (login.getText().equals(Configuration.login) &&
+            CryptPWD.getSHA512SecurePassword(pwd.getText()).equals(Configuration.password)) {
+
         } else {
             Alert alerte = new Alert(Alert.AlertType.ERROR);
             alerte.setTitle("Erreur Login ou Pwd!!");
             alerte.setHeaderText("Erreur Login ou Pwd!");
             alerte.showAndWait();
-            error.setText("Erreur de saisie!" +
-                    "Login ou password");
+            error.setText("Erreur de saisie!" + "Login ou password");
             onClearClick();
         }
     }

@@ -58,6 +58,10 @@ public class AffichageMediaController
             this.sousCategorieColumn.setCellValueFactory(new PropertyValueFactory<>("sousCategorieLabel"));
 
             mediaTableView.setItems(medias);
+            this.identifiantColumn.setReorderable(false);
+            this.titreColumn.setReorderable(false);
+            this.categorieColumn.setReorderable(false);
+            this.sousCategorieColumn.setReorderable(false);
 
         } catch (Exception e) {
             System.out.println("Erreur Impossible de récupérer les medias.");

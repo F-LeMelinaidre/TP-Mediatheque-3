@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="main-frame" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
    <children>
-        <MenuBar>
+        <MenuBar fx:id="menuBar" maxHeight="32.0" styleClass="nav-bar" VBox.vgrow="ALWAYS">
             <menus>
-                <Menu mnemonicParsing="false" text="Ajouter">
+                <Menu fx:id="ajoutMenu" mnemonicParsing="false" styleClass="nav-item" text="Ajouter">
                     <items>
                         <MenuItem fx:id="ajouterEmprunteur" mnemonicParsing="false" onAction="#ajouterEmprunteur" text="Inscrit" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="ajoutMedia" mnemonicParsing="false" onAction="#ajouterMedia" text="Média" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="ajoutEmprunt" mnemonicParsing="false" onAction="#ajouterEmprunt" text="Emprunt" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Afficher">
+                <Menu fx:id="afficheMenu" mnemonicParsing="false" text="Afficher">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#afficherMedia" text="Les medias" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#afficherEmprunteur" text="Les inscrits" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#afficherEmprunt" text="Les emprunts" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Parametres">
+                <Menu fx:id="courrielMenu" mnemonicParsing="false" text="Parametres">
                     <items>
                         <MenuItem fx:id="envoiCouriel" mnemonicParsing="false" onAction="#toSendMail" text="Email" />
                     </items>
                 </Menu>
             </menus>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
         </MenuBar>
-        <AnchorPane fx:id="rootPane">
-
-        </AnchorPane>
+      <StackPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="300.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </VBox.margin>
+      </StackPane>
    </children>
 </VBox>

@@ -3,11 +3,8 @@ package fr.vannes.gretajavafx.controller;
 import fr.vannes.gretajavafx.Main;
 import fr.vannes.gretajavafx.model.Emprunteur;
 import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAO;
-import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAOImpl;
-import fr.vannes.gretajavafx.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,8 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -34,7 +30,6 @@ public class HomeController implements Initializable {
      * Instance d'HomeController
      */
     private static HomeController app = null;
-
     @FXML
     private ListView<String> maListe; // Typage de la ListView
     @FXML
@@ -43,7 +38,7 @@ public class HomeController implements Initializable {
     private TableColumn<Emprunteur, String> prenom, nom;
 
     @FXML
-    private AnchorPane rootPane;
+    private StackPane rootPane;
 
     private final ObservableList<Emprunteur> obsPersonne = FXCollections.observableArrayList();
     private EmprunteurDAO emprunteurDAO; // DAO pour interagir avec les emprunteurs
@@ -64,11 +59,13 @@ public class HomeController implements Initializable {
      */
     public void HomeScene(Window w) {
         try {
+
+            Stage stage = (Stage) w;
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("home.fxml"));
 
-            Scene scene = new Scene(loader.load(), 640, 400);
-            Stage stage = (Stage) w;
+            Scene scene = new Scene(loader.load(), 800, 600);
+
             stage.setTitle("Accueil");
             stage.setScene(scene);
 
@@ -95,11 +92,19 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        app = this; // Initialisation de l'instance
-        /*DAOFactory daoFactory = DAOFactory.getInstance();
-        this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory); // Initialiser le DAO
-        loadListe();
-        loadTable();*/
+        app = this;
+
+
+    }
+
+    private void applyPopupOffset(Menu menu) {
+        menu.setOnShowing(event -> {
+            if (menu.getParentPopup() != null) {
+                // Offset the popup menu position by 8px on X and Y
+                menu.getParentPopup().setX(menu.getParentPopup().getX() + 8);
+                menu.getParentPopup().setY(menu.getParentPopup().getY() + 8);
+            }
+        });
     }
 
     /**
@@ -227,11 +232,6 @@ public class HomeController implements Initializable {
             rootPane.getChildren().clear();
             rootPane.getChildren().add(afficherMediaPane);
 
-            AnchorPane.setBottomAnchor(afficherMediaPane, 0.0);
-            AnchorPane.setLeftAnchor(afficherMediaPane, 0.0);
-            AnchorPane.setRightAnchor(afficherMediaPane, 0.0);
-            AnchorPane.setTopAnchor(afficherMediaPane, 0.0);
-
         } catch (IOException e) {
             errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
             e.printStackTrace();
@@ -245,10 +245,6 @@ public class HomeController implements Initializable {
 
         rootPane.getChildren().clear();
         rootPane.getChildren().add(afficherEmpruntPane);
-        AnchorPane.setBottomAnchor(afficherEmpruntPane, 0.0);
-        AnchorPane.setLeftAnchor(afficherEmpruntPane, 0.0);
-        AnchorPane.setRightAnchor(afficherEmpruntPane, 0.0);
-        AnchorPane.setTopAnchor(afficherEmpruntPane, 0.0);
 
         } catch (IOException e) {
             errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunt : " + e.getMessage());
