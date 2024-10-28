@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="fr.vannes.gretajavafx.controller.AjoutEmpruntController">
 
-    <Label text="ID de l'emprunteur:" />
-    <TextField fx:id="emprunteurIdField" promptText="Entrez l'ID de l'emprunteur" />
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="8.0" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AjoutEmpruntController">
+   <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+      <children>
+      
+                      <Label alignment="CENTER" contentDisplay="CENTER" text="ID de l'emprunteur:" />
+          <TextField fx:id="emprunteurIdField" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="Entrez l'ID de l'emprunteur" />
+      </children>
+   </VBox>
+   <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+      <children>
+      
+                <Label alignment="CENTER" contentDisplay="CENTER" text="ID du média:" />
+          <TextField fx:id="mediaIdField" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="Entrez l'ID du média" />
+      </children>
+   </VBox>
+   <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+      <children>
+      
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Date d'emprunt:" />
+          <DatePicker fx:id="dateEmpruntField" />
+      </children>
+   </VBox>
+   <VBox>
+      <children>
+      
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Date de retour:" />
+          <DatePicker fx:id="dateRetourField" />
+      </children>
+   </VBox>
 
-    <Label text="ID du média:" />
-    <TextField fx:id="mediaIdField" promptText="Entrez l'ID du média" />
+          <Button fx:id="ajouterButton" onAction="#ajouterEmprunt" text="Ajouter Emprunt" />
+   <styleClass>
+      <String fx:value="main-frame" />
+      <String fx:value="main-form" />
+      <String fx:value="form-emprunt" />
+   </styleClass>
 
-    <Label text="Date d'emprunt:" />
-    <DatePicker fx:id="dateEmpruntField" />
-
-    <Label text="Date de retour:" />
-    <DatePicker fx:id="dateRetourField" />
-
-    <Button fx:id="ajouterButton" text="Ajouter Emprunt" onAction="#ajouterEmprunt" />
-
-</VBox>
-
+      </VBox>

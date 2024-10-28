@@ -1131,7 +1131,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="289" parent="1" name="mediatheque">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-10-24.17:36:19</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-10-28.07:57:42</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="mysql">
@@ -1177,7 +1177,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="301" parent="289" name="category">
+    <table id="301" parent="289" name="categorie">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
@@ -1197,7 +1197,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <table id="306" parent="289" name="subcategory">
+    <table id="306" parent="289" name="sous_categorie">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
@@ -1225,8 +1225,8 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="312" parent="301" name="category_id">
-      <AutoIncrement>2</AutoIncrement>
+    <column id="312" parent="301" name="categorie_id">
+      <AutoIncrement>3</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1236,7 +1236,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <StoredType>varchar(45)|0s</StoredType>
     </column>
     <index id="314" parent="301" name="PRIMARY">
-      <ColNames>category_id</ColNames>
+      <ColNames>categorie_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
@@ -1245,38 +1245,38 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="316" parent="302" name="category_id">
+    <column id="316" parent="302" name="categorie_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="317" parent="302" name="subcategory_id">
+    <column id="317" parent="302" name="sous_categorie_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
     <foreign-key id="318" parent="302" name="fk_category_has_subcategory_category1">
-      <ColNames>category_id</ColNames>
-      <RefColNames>category_id</RefColNames>
-      <RefTableName>category</RefTableName>
+      <ColNames>categorie_id</ColNames>
+      <RefColNames>categorie_id</RefColNames>
+      <RefTableName>categorie</RefTableName>
     </foreign-key>
     <foreign-key id="319" parent="302" name="fk_category_has_subcategory_subcategory1">
-      <ColNames>subcategory_id</ColNames>
-      <RefColNames>subcategory_id</RefColNames>
-      <RefTableName>subcategory</RefTableName>
+      <ColNames>sous_categorie_id</ColNames>
+      <RefColNames>sous_categorie_id</RefColNames>
+      <RefTableName>sous_categorie</RefTableName>
     </foreign-key>
     <index id="320" parent="302" name="PRIMARY">
-      <ColNames>category_id
-subcategory_id</ColNames>
+      <ColNames>categorie_id
+sous_categorie_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
     <index id="321" parent="302" name="fk_category_has_subcategory_category_id">
-      <ColNames>category_id</ColNames>
+      <ColNames>categorie_id</ColNames>
       <Type>btree</Type>
     </index>
     <index id="322" parent="302" name="fk_category_has_subcategory_subcategory_id">
-      <ColNames>subcategory_id</ColNames>
+      <ColNames>sous_categorie_id</ColNames>
       <Type>btree</Type>
     </index>
     <key id="323" parent="302" name="PRIMARY">
@@ -1332,7 +1332,7 @@ media_id</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="334" parent="304" name="emprunteur_id">
-      <AutoIncrement>61</AutoIncrement>
+      <AutoIncrement>87</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1364,7 +1364,7 @@ media_id</ColNames>
       <Position>1</Position>
       <StoredType>varchar(45)|0s</StoredType>
     </column>
-    <column id="341" parent="305" name="title">
+    <column id="341" parent="305" name="titre">
       <Position>2</Position>
       <StoredType>varchar(45)|0s</StoredType>
     </column>
@@ -1372,57 +1372,72 @@ media_id</ColNames>
       <Position>3</Position>
       <StoredType>longtext|0s</StoredType>
     </column>
-    <column id="343" parent="305" name="category_id">
+    <column id="343" parent="305" name="categorie_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="344" parent="305" name="subcategory_id">
+    <column id="344" parent="305" name="sous_categorie_id">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="345" parent="305" name="fk_media_category_has_subcategory1">
-      <ColNames>category_id
-subcategory_id</ColNames>
-      <RefColNames>category_id
-subcategory_id</RefColNames>
+    <column id="345" parent="305" name="mediatheque_id">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="346" parent="305" name="fk_media_category_has_subcategory1">
+      <ColNames>categorie_id
+sous_categorie_id</ColNames>
+      <RefColNames>categorie_id
+sous_categorie_id</RefColNames>
       <RefTableName>category_has_subcategory</RefTableName>
     </foreign-key>
-    <index id="346" parent="305" name="PRIMARY">
+    <foreign-key id="347" parent="305" name="fk_media_mediatheque1">
+      <ColNames>mediatheque_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>mediatheque</RefTableName>
+    </foreign-key>
+    <index id="348" parent="305" name="PRIMARY">
       <ColNames>media_id
-category_id
-subcategory_id</ColNames>
+categorie_id
+sous_categorie_id
+mediatheque_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="347" parent="305" name="fk_media_category_has_subcategory1_idx">
-      <ColNames>category_id
-subcategory_id</ColNames>
+    <index id="349" parent="305" name="fk_media_category_has_subcategory1_idx">
+      <ColNames>categorie_id
+sous_categorie_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="348" parent="305" name="PRIMARY">
+    <index id="350" parent="305" name="fk_media_mediatheque1_idx">
+      <ColNames>mediatheque_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="351" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="349" parent="306" name="subcategory_id">
-      <AutoIncrement>4</AutoIncrement>
+    <column id="352" parent="306" name="sous_categorie_id">
+      <AutoIncrement>5</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="350" parent="306" name="label">
+    <column id="353" parent="306" name="label">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(45)|0s</StoredType>
     </column>
-    <index id="351" parent="306" name="PRIMARY">
-      <ColNames>subcategory_id</ColNames>
+    <index id="354" parent="306" name="PRIMARY">
+      <ColNames>sous_categorie_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="352" parent="306" name="PRIMARY">
+    <key id="355" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

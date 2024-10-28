@@ -18,7 +18,8 @@
 .menu-item .label,
 .menu-item .label,
 .table-view,
-.table-view .column-header .label {
+.table-view .column-header .label,
+.label {
     -fx-text-fill: #f1f1f1;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 1, 0.0, 1, 1);
 }
@@ -154,5 +155,27 @@
 }
 .table-view > .virtual-flow > .scroll-bar:vertical .thumb,
 .table-view > .virtual-flow > .scroll-bar:vertical > .thumb {
+    -fx-background-color: rgb(91, 108, 129);
+}
+
+.main-form {
+    -fx-padding: 8px 16px 16px 16px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(72, 95, 126);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 8, 0, 2, 4);
+}
+
+.label {
+    -fx-pref-height: 25px;
+    -fx-padding: 8px 0;
+    -fx-font-family: "BioRhyme Bold";
+}
+
+.text-input {
+    -fx-min-height: 32px;
+    -fx-pref-height: 32px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #aaa;
     -fx-background-color: rgb(91, 108, 129);
 }
