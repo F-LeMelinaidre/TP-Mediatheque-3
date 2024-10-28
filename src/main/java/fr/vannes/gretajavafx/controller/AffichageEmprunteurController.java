@@ -27,7 +27,7 @@ public class AffichageEmprunteurController {
 
     public AffichageEmprunteurController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory);
+        this.emprunteurDAO = EmprunteurDAOImpl.get_instance(daoFactory);
     }
 
     @FXML

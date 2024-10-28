@@ -19,6 +19,16 @@ public class AffichageMediaController
     @FXML
     private TableView<Media> mediaTableView;
 
+    @FXML
+    private TableColumn<Media, String> identifiantColumn;
+    @FXML
+    private TableColumn<Media, String> titreColumn;
+    @FXML
+    private TableColumn<Media, String> categorieColumn;
+    @FXML
+    private TableColumn<Media, String> sousCategorieColumn;
+
+
     private MediaDAOImpl mediaDAO;
     private ObservableList<Media> medias = FXCollections.observableArrayList();
 
@@ -42,21 +52,16 @@ public class AffichageMediaController
             ArrayList<Media> mediaList = this.mediaDAO.findAll();
             medias.addAll(mediaList);
 
-            TableColumn<Media, String> mediaIdColonne = new TableColumn<>("Identifiant");
-            mediaIdColonne.setCellValueFactory(new PropertyValueFactory<>("mediaId"));
-
-            TableColumn<Media, String> titreColonne = new TableColumn<>("Titre");
-            titreColonne.setCellValueFactory(new PropertyValueFactory<>("titre"));
-
-            TableColumn<Media, String> categorieColonne = new TableColumn<>("Catégorie");
-            categorieColonne.setCellValueFactory(new PropertyValueFactory<>("categorieLabel"));
-
-            TableColumn<Media, String> sousCategorieColonne = new TableColumn<>("Sous-catégorie");
-            sousCategorieColonne.setCellValueFactory(new PropertyValueFactory<>("sousCategorieLabel"));
-
-            mediaTableView.getColumns().addAll(mediaIdColonne, titreColonne, categorieColonne, sousCategorieColonne);
+            this.identifiantColumn.setCellValueFactory(new PropertyValueFactory<>("mediaId"));
+            this.titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
+            this.categorieColumn.setCellValueFactory(new PropertyValueFactory<>("categorieLabel"));
+            this.sousCategorieColumn.setCellValueFactory(new PropertyValueFactory<>("sousCategorieLabel"));
 
             mediaTableView.setItems(medias);
+            this.identifiantColumn.setReorderable(false);
+            this.titreColumn.setReorderable(false);
+            this.categorieColumn.setReorderable(false);
+            this.sousCategorieColumn.setReorderable(false);
 
         } catch (Exception e) {
             System.out.println("Erreur Impossible de récupérer les medias.");

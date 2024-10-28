@@ -26,7 +26,7 @@ public class RechercheEmprunteurController {
 
     public RechercheEmprunteurController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        this.emprunteurDAO = new EmprunteurDAOImpl(daoFactory);
+        this.emprunteurDAO = EmprunteurDAOImpl.get_instance(daoFactory);
     }
 
     @FXML
@@ -61,7 +61,7 @@ public class RechercheEmprunteurController {
             if (emprunteur != null) {
                 // Afficher les informations de l'emprunteur trouvé
                 resultLabel.setText("Emprunteur trouvé : " + emprunteur.getNom() + " " + emprunteur.getPrenom() +
-                        ", Né(e) le : " + emprunteur.getDate_naissance());
+                        ", Né(e) le : " + emprunteur.getDateNaissance());
             } else {
                 // Aucun emprunteur trouvé avec cet ID
                 resultLabel.setText("Aucun emprunteur trouvé avec cet ID.");

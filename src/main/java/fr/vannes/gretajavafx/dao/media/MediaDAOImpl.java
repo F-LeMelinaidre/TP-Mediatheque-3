@@ -13,49 +13,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MediaDAOImpl implements MediaDAO<Media> {
-
-    private static final String MEDIA_ID = "media_id";
-    private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
-    private static final String CATEGORY_ID = "category_id";
-    private static final String CATEGORY_LABEL = "category_label";
-    private static final String SUBCATEGORY_ID = "subcategory_id";
-    private static final String SUBCATEGORY_LABEL = "subcategory_label";
+public class MediaDAOImpl implements MediaDAO<Media>
+{
 
     private static MediaDAOImpl _instance = null;
     private static Connection _conn = null;
     private static DAOFactory _df;
 
-    private static final String INSERT = "INSERT INTO media (media_id, title, description, category_id, subcategory_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO media (media_id, titre, description, categorie_id, sous_categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String READONE = "SELECT m.media_id, m.title, m.description, " +
-                                          "c.category_id AS category_id, c.label AS category_label, " +
-                                          "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
+    private static final String READONE = "SELECT m.media_id, m.titre, m.description, " +
+                                          "c.categorie_id AS categorieId, c.label AS categorieLabel, " +
+                                          "sc.sous_categorie_id AS sousCategorieId, sc.label AS sousCategorieLabel " +
                                           "FROM media AS m " +
-                                          "LEFT JOIN category c ON m.category_id = c.category_id " +
-                                          "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id  " +
+                                          "LEFT JOIN categorie c ON m.categorie_id = c.categorie_id " +
+                                          "LEFT JOIN sous_categorie sc ON m.sous_categorie_id = sc.sous_categorie_id  " +
                                           "WHERE m.media_id = ?";
 
-    private static final String READALL = "SELECT m.media_id, m.title, m.description, " +
-                                          "c.category_id AS category_id, c.label AS category_label, " +
-                                          "sc.subcategory_id AS subcategory_id, sc.label AS subcategory_label " +
+    private static final String READALL = "SELECT m.media_id, m.titre, m.description, " +
+                                          "c.categorie_id AS categorieId, c.label AS categorieLabel, " +
+                                          "sc.sous_categorie_id AS sousCategorieId, sc.label AS sousCategorieLabel " +
                                           "FROM media AS m " +
-                                          "LEFT JOIN category c ON m.category_id = c.category_id " +
-                                          "LEFT JOIN subcategory sc ON m.subcategory_id = sc.subcategory_id " +
+                                          "LEFT JOIN categorie c ON m.categorie_id = c.categorie_id " +
+                                          "LEFT JOIN sous_categorie sc ON m.sous_categorie_id = sc.sous_categorie_id " +
                                           "ORDER BY m.media_id DESC";
 
-    private static final String UPDATE = "UPDATE media SET title = ?, description = ?, category_id = ?, subcategory_id = ? WHERE media_id = ?";
+    private static final String UPDATE = "UPDATE media SET titre = ?, description = ?, categorie_id = ?, sous_categorie_id = ? WHERE media_id = ?";
     ;
     private static final String DELETE = "DELETE FROM media WHERE media_id = ?";
 
-    private MediaDAOImpl(DAOFactory df) throws SQLException {
+    private MediaDAOImpl(DAOFactory df) throws SQLException
+    {
         try {
             _conn = df.getConnection();
         } catch (SQLException e) {
             throw new SQLException("Probleme driver manager ou acces bdd !!");
         }
-
     }
 
     public static MediaDAOImpl get_instance(DAOFactory df)
@@ -73,34 +66,72 @@ public class MediaDAOImpl implements MediaDAO<Media> {
                 throw new RuntimeException("Erreur inconnue lors de l'initialisation de MediaDAOImpl", e);
             }
         }
-
         return _instance;
     }
 
     @Override
-    public int count() {
+    public int count()
+    {
         String sql = "SELECT COUNT(*) FROM media";
         int count = 0;
-        try {
-            PreparedStatement ps = _conn.prepareStatement(sql);
-            ResultSet result = ps.executeQuery();
+        ResultSet result = null;
+
+        try (PreparedStatement ps = _conn.prepareStatement(sql)) {
+
+            result = ps.executeQuery();
 
             if (result.next()) {
                 count = result.getInt(1);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            _df.closeResultSet(result);
+            _df.closeConnection();
         }
+
         return count;
     }
 
-    @Override
-    public Boolean create(Media media) {
-        int result = 0;
-        PreparedStatement ps = null;
+    /**
+     * Retourne un tableau de compteur de media par année
+     *
+     * @return
+     */
+    public Map<Integer, Integer> countByYear()
+    {
+        Map<Integer, Integer> counters = new HashMap<>();
+        String sql = "SELECT SUBSTRING(media_id, 1, 4) AS year, COUNT(*) AS nb_media FROM media GROUP BY year ORDER BY year";
+        ResultSet result = null;
 
-        try {
-            ps = _conn.prepareStatement(INSERT);
+        try (PreparedStatement ps = _conn.prepareStatement(sql)) {
+
+            result = ps.executeQuery();
+
+            while (result.next()) {
+                int year = Integer.parseInt(result.getString("year"));
+                int nombreDeMedia = result.getInt("nb_media");
+                counters.put(year, nombreDeMedia);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeResultSet(result);
+            _df.closeConnection();
+        }
+
+        return counters;
+    }
+
+    @Override
+    public Boolean create(Media media)
+    {
+        int result = 0;
+
+        try (PreparedStatement ps = _conn.prepareStatement(INSERT)) {
+
             ps.setString(1, media.getMediaId());
             ps.setString(2, media.getTitre());
             ps.setString(3, media.getDescription());
@@ -109,189 +140,157 @@ public class MediaDAOImpl implements MediaDAO<Media> {
 
             result = ps.executeUpdate();
 
-            ps.close();
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             _df.closeConnection();
+        }
+
+        return (result > 0);
+    }
+
+    @Override
+    public Media findById(String id) {
+        Media media = null;
+        ResultSet rs = null;
+
+        try (PreparedStatement ps = _conn.prepareStatement(READONE)) {
+
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String media_id = rs.getString("media_id");
+                String title = rs.getString("titre");
+                String description = rs.getString("description");
+
+                media = new Media(media_id, title, description, this.getCategorie(rs), this.getSousCategorie(rs));
+            }
 
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-
-            try {
-                if (ps != null) ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            _df.closeResultSet(rs);
             _df.closeConnection();
         }
-        return (result > 0);
-    }
 
-    /**
-     * Retourne un tableau de compteur de media par année
-     *
-     * @return
-     */
-    public Map<Integer, Integer> countByYear() {
-        Map<Integer, Integer> counters = new HashMap<Integer, Integer>();
-
-        String sql = "SELECT SUBSTRING(media_id, 1, 4) AS year, COUNT(*) AS nb_media " +
-                     "FROM media " +
-                     "GROUP BY year " +
-                     "ORDER BY year";
-
-        try {
-            PreparedStatement ps = _conn.prepareStatement(sql);
-            ResultSet result = ps.executeQuery();
-
-            while (result.next()) {
-                int year = Integer.parseInt(result.getString("year"));
-                int nombreDeMedia = result.getInt("nb_media");
-                counters.put(year, nombreDeMedia);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return counters;
-    }
-
-    @Override
-    public Media findById(String id) {
-        Media media = null;
-        try {
-            PreparedStatement ps = _conn.prepareStatement(READONE);
-            ps.setString(1, id);
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-
-                String media_id = rs.getString(MEDIA_ID);
-                String title = rs.getString(TITLE);
-                String description = rs.getString(DESCRIPTION);
-
-                media = new Media(media_id, title, description);
-                media.setCategorie(this.getCategorie(rs));
-                media.setSousCategorie(this.getSousCategorie(rs));
-
-            }
-            ps.close();
-            _df.closeConnection();
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return media;
     }
 
     @Override
     public ArrayList<Media> findAll() {
         ArrayList<Media> mediaList = new ArrayList<>();
+        ResultSet rs = null;
 
-        try {
-            PreparedStatement ps = _conn.prepareStatement(READALL);
+        try (PreparedStatement ps = _conn.prepareStatement(READALL)) {
 
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             while (rs.next()) {
-                String media_id = rs.getString(MEDIA_ID);
-                String title = rs.getString(TITLE);
-                String description = rs.getString(DESCRIPTION);
+                String media_id = rs.getString("media_id");
+                String title = rs.getString("titre");
+                String description = rs.getString("description");
 
                 Media media = new Media(media_id, title, description);
-
                 media.setCategorie(this.getCategorie(rs));
                 media.setSousCategorie(this.getSousCategorie(rs));
-
                 mediaList.add(media);
-
             }
-
-            ps.close();
-            _df.closeConnection();
 
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            _df.closeResultSet(rs);
+            _df.closeConnection();
+
         }
+
         return mediaList;
     }
 
     @Override
     public Media update(Media media) {
-        try {
 
-            PreparedStatement ps = _conn.prepareStatement(UPDATE);
+        try (PreparedStatement ps = _conn.prepareStatement(UPDATE)) {
+
             ps.setString(1, media.getTitre());
             ps.setString(2, media.getDescription());
             ps.setInt(3, media.getCategorie().getIdCategorie());
             ps.setInt(4, media.getSousCategorie().getIdSousCategorie());
             ps.setString(5, media.getMediaId());
 
-            ps.close();
-            _df.closeConnection();
-
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
                 return media;
             }
+
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            _df.closeConnection();
         }
+
         return null;
     }
 
     @Override
     public Boolean delete(String mediaId) {
         Boolean result = false;
-        try {
 
-            PreparedStatement ps = _conn.prepareStatement(DELETE);
+        try (PreparedStatement ps = _conn.prepareStatement(DELETE)) {
+
             ps.setString(1, mediaId);
 
             int rowsAffected = ps.executeUpdate();
-
             result = rowsAffected > 0;
-
-            ps.close();
-            _df.closeConnection();
 
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+                _df.closeConnection();
         }
+
         return result;
     }
 
     @Override
-    public Categorie getCategorie(ResultSet rs) throws SQLException {
+    public Categorie getCategorie(ResultSet rs) throws SQLException
+    {
         Categorie categorie = null;
-        if (rs.getInt(CATEGORY_ID) > 0) {
-            int category_id = rs.getInt(CATEGORY_ID);
-            String category_label = rs.getString(CATEGORY_LABEL);
 
-            categorie = new Categorie(category_id, category_label);
+        if (rs.getInt("categorieId") > 0) {
+            int categorie_id = rs.getInt("categorieId");
+            String categorieLabel = rs.getString("categorieLabel");
 
+            categorie = new Categorie(categorie_id, categorieLabel);
         }
+
         return categorie;
     }
 
     @Override
-    public SousCategorie getSousCategorie(ResultSet rs) throws SQLException {
-        SousCategorie sub_category = null;
+    public SousCategorie getSousCategorie(ResultSet rs) throws SQLException
+    {
+        SousCategorie sousCategorie = null;
 
-        if (rs.getInt(SUBCATEGORY_ID) > 0) {
-            int subcategory_id = rs.getInt(SUBCATEGORY_ID);
-            String subcategory_label = rs.getString(SUBCATEGORY_LABEL);
-            sub_category = new SousCategorie(subcategory_id, subcategory_label);
+        if (rs.getInt("sousCategorieId") > 0) {
+            int sousCategorieId = rs.getInt("sousCategorieId");
+            String sousCategorieLabel = rs.getString("sousCategorieLabel");
+
+            sousCategorie = new SousCategorie(sousCategorieId, sousCategorieLabel);
         }
-        return sub_category;
+
+        return sousCategorie;
     }
 }

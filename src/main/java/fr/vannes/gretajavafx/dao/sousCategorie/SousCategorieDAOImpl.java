@@ -17,49 +17,25 @@ public class SousCategorieDAOImpl implements SousCategorieDAO<SousCategorie> {
     private static Connection _conn = null;
     private static DAOFactory _df;
 
-    private static final String SUBCATEGORY_ID = "subcategory_id";
-    private static final String LABEL = "label";
-
-    private String INSERT = "INSERT INTO SousCategorie (label) VALUES (?)";
-    private String READONE =
-            "SELECT sc.subcategory_id, sc.label, " + "FROM subcategory sc " + "WHERE subcategory_id = ?";
-    private String READALL = "SELECT sc.subcategory_id, sc.label " + "FROM subcategory sc " + "ORDER BY sc.label ASC";
-
-    private String READALLBYCATEGORY = "SELECT sc.subcategory_id, sc.label " +
-                                       "FROM subcategory sc " +
-                                       "INNER JOIN category_has_subcategory chs ON sc.subcategory_id = chs.subcategory_id " +
-                                       "INNER JOIN category c ON chs.category_id = c.category_id " +
-                                       "WHERE c.category_id = ? " +
-                                       "ORDER BY sc.label ASC";
-
-    private String UPDATE = "UPDATE subcategory SET label = ? WHERE subcategory_id = ?";
-    ;
-    private String DELETE = "DELETE FROM subcategory WHERE subcategory_id = ?";
-
     private SousCategorieDAOImpl(DAOFactory _df) throws SQLException {
         try {
             _conn = _df.getConnection();
         } catch (SQLException e) {
             throw new SQLException("Probleme driver manager ou acces bdd !!");
         }
-
     }
 
     public static SousCategorieDAOImpl getInstance() {
         if (instance == null) {
             try {
-
                 _df = DAOFactory.getInstance();
                 instance = new SousCategorieDAOImpl(_df);
-
             } catch (SQLException e) {
                 System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
         return instance;
     }
 
@@ -76,26 +52,28 @@ public class SousCategorieDAOImpl implements SousCategorieDAO<SousCategorie> {
     @Override
     public ArrayList<SousCategorie> findAll() {
         ArrayList<SousCategorie> subCategoriesList = new ArrayList<>();
+        String sql = "SELECT sc.sous_categorie_id, sc.label " + "FROM sous_categorie sc " + "ORDER BY sc.label";
+        ResultSet rs = null;
 
-        try {
-            PreparedStatement ps = _conn.prepareStatement(READALL);
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
-            ResultSet rs = ps.executeQuery();
+            rs = statement.executeQuery();
 
             while (rs.next()) {
-                int sousCategorieId = rs.getInt(SUBCATEGORY_ID);
-                String label = rs.getString(LABEL);
+                int sousCategorieId = rs.getInt("sous_categorie_id");
+                String label = rs.getString("label");
 
                 SousCategorie sousCategorie = new SousCategorie(sousCategorieId, label);
-
-
                 subCategoriesList.add(sousCategorie);
-
             }
+
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            _df.closeResultSet(rs);
+            _df.closeConnection();
         }
 
         return subCategoriesList;
@@ -104,28 +82,36 @@ public class SousCategorieDAOImpl implements SousCategorieDAO<SousCategorie> {
     @Override
     public ArrayList<SousCategorie> findAllByCategory(Categorie categorie) {
         ArrayList<SousCategorie> subCategoriesList = new ArrayList<>();
+        String sql = "SELECT sc.sous_categorie_id, sc.label " +
+                     "FROM sous_categorie sc " +
+                     "INNER JOIN category_has_subcategory chs ON sc.sous_categorie_id = chs.sous_categorie_id " +
+                     "INNER JOIN categorie c ON chs.categorie_id = c.categorie_id " +
+                     "WHERE c.categorie_id = ? " +
+                     "ORDER BY sc.label";
+        ResultSet rs = null;
 
-        try {
-            System.out.println("try SubCategoryDAO.findAllByCategoryId(int)");
-            PreparedStatement ps = _conn.prepareStatement(READALLBYCATEGORY);
-            ps.setInt(1, categorie.getIdCategorie());
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
-            ResultSet rs = ps.executeQuery();
+            statement.setInt(1, categorie.getIdCategorie());
+            rs = statement.executeQuery();
 
             while (rs.next()) {
-                int sousCategorieId = rs.getInt(SUBCATEGORY_ID);
-                String label = rs.getString(LABEL);
+                int sousCategorieId = rs.getInt("sous_categorie_id");
+                String label = rs.getString("label");
 
                 SousCategorie sousCategorie = new SousCategorie(sousCategorieId, label);
-
-
                 subCategoriesList.add(sousCategorie);
 
             }
+
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            _df.closeResultSet(rs);
+            _df.closeConnection();
+
         }
 
         return subCategoriesList;

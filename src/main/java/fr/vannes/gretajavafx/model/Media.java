@@ -45,39 +45,39 @@ public class Media {
 
     /**
      * Constructeur pour les données issu de la base de données
-     * @param idMedia {@code String} {@code media_id}
+     * @param mediaId {@code String} {@code media_id}
      * @param titre {@code String} {@code titre}
      * @param description {@code String} {@code description}
      */
-    public Media(String idMedia, String titre, String description) {
-        this.mediaId = idMedia;
+    public Media(String mediaId, String titre, String description) {
+        this.mediaId = mediaId;
         this.titre   = titre;
         this.description = description;
     }
 
     /**
      * Constructeur pour les données issu de la base de données avec l'objet {@link Categorie}
-     * @param idMedia {@code String} {@code media_id}
+     * @param mediaId {@code String} {@code media_id}
      * @param titre {@code String} {@code titre}
      * @param description {@code String} {@code description}
      * @param categorie {@link Categorie}
      */
-    public Media(String idMedia, String titre, String description, Categorie categorie) {
-        this.mediaId = idMedia;
+    public Media(String mediaId, String titre, String description, Categorie categorie) {
+        this.mediaId = mediaId;
         this.titre   = titre;
         this.categorie   = categorie;
     }
 
     /**
      * Constructeur pour les données issu de la base de données avec l'objet {@link Categorie} {@link SousCategorie}
-     * @param idMedia {@code String} {@code media_id}
+     * @param mediaId {@code String} {@code media_id}
      * @param titre {@code String} {@code titre}
      * @param description {@code String} {@code description}
      * @param categorie {@link Categorie}
      * @param sousCategorie {@link SousCategorie}
      */
-    public Media(String idMedia, String titre, String description, Categorie categorie, SousCategorie sousCategorie) {
-        this.mediaId = idMedia;
+    public Media(String mediaId, String titre, String description, Categorie categorie, SousCategorie sousCategorie) {
+        this.mediaId = mediaId;
         this.titre   = titre;
         this.description = description;
         this.categorie     = categorie;

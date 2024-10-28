@@ -10,72 +10,107 @@ import java.util.List;
 
 public class EmprunteurDAOImpl implements EmprunteurDAO {
 
-    private DAOFactory daoFactory;
+    private static EmprunteurDAOImpl _instance = null;
+    private static Connection _conn = null;
+    private static DAOFactory _df;
 
-    public EmprunteurDAOImpl(DAOFactory daoFactory) {
-        this.daoFactory = daoFactory;
+    private EmprunteurDAOImpl(DAOFactory df) throws SQLException {
+        try {
+            _conn = df.getConnection();
+        } catch (SQLException e) {
+            throw new SQLException("Probleme driver manager ou acces bdd !!");
+        }
+    }
+
+    public static EmprunteurDAOImpl get_instance(DAOFactory df)
+    {
+        if (_instance == null) {
+            try {
+                _df = df;
+                _instance = new EmprunteurDAOImpl(_df);
+            } catch (SQLException e) {
+                System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+
+                throw new RuntimeException("Erreur lors de l'initialisation de MediaDAOImpl", e);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Erreur inconnue lors de l'initialisation de MediaDAOImpl", e);
+            }
+        }
+        return _instance;
     }
 
     public void ajouterEmprunteur(Emprunteur emprunteur) {
         String sql = "INSERT INTO emprunteur (nom, prenom, date_naissance) VALUES (?, ?, ?)";
+        ResultSet generatedKeys = null;
 
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = _conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, emprunteur.getNom());
             statement.setString(2, emprunteur.getPrenom());
-            statement.setDate(3, Date.valueOf(emprunteur.getDate_naissance()));
+            statement.setDate(3, Date.valueOf(emprunteur.getDateNaissance()));
 
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                try {
+                    generatedKeys = statement.getGeneratedKeys();
                     if (generatedKeys.next()) {
-                        emprunteur.setEmprunteur_id(generatedKeys.getInt(1));
+                        emprunteur.setEmprunteurId(generatedKeys.getInt(1));
                     }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeResultSet(generatedKeys);
+            _df.closeConnection();
         }
     }
 
-    // Récupérer un emprunteur par ID
     public Emprunteur getEmprunteurById(int id) {
         String sql = "SELECT * FROM emprunteur WHERE emprunteur_id = ?";
         Emprunteur emprunteur = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    String nom = resultSet.getString("nom");
-                    String prenom = resultSet.getString("prenom");
-                    LocalDate dateNaissance = resultSet.getDate("date_naissance").toLocalDate();
+            resultSet = statement.executeQuery();
 
-                    // On ne récupère pas encore les medias ici car il faudra une jointure avec la table Media.
-                    emprunteur = new Emprunteur(id, nom, prenom, dateNaissance, new ArrayList<>());
-                }
+            if (resultSet.next()) {
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                LocalDate dateNaissance = resultSet.getDate("date_naissance").toLocalDate();
+
+                emprunteur = new Emprunteur(id, nom, prenom, dateNaissance, new ArrayList<>());
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeResultSet(resultSet);
+            _df.closeConnection();
         }
 
         return emprunteur;
     }
 
-    // Récupérer tous les emprunteurs
     public List<Emprunteur> getAllEmprunteurs() {
         List<Emprunteur> emprunteurs = new ArrayList<>();
         String sql = "SELECT * FROM emprunteur";
+        ResultSet resultSet = null;
 
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
+
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("emprunteur_id");
@@ -89,42 +124,50 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeResultSet(resultSet);
+            _df.closeConnection();
         }
 
         return emprunteurs;
     }
 
-    // Modifier un emprunteur
     public void updateEmprunteur(Emprunteur emprunteur) {
         String sql = "UPDATE emprunteur SET nom = ?, prenom = ?, date_naissance = ? WHERE emprunteur_id = ?";
 
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
             statement.setString(1, emprunteur.getNom());
             statement.setString(2, emprunteur.getPrenom());
-            statement.setDate(3, Date.valueOf(emprunteur.getDate_naissance()));
-            statement.setInt(4, emprunteur.getEmprunteur_id());
-
+            statement.setDate(3, Date.valueOf(emprunteur.getDateNaissance()));
+            statement.setInt(4, emprunteur.getEmprunteurId());
             statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeConnection();
         }
     }
 
-    // Supprimer un emprunteur par ID
     public void supprimerEmprunteur(int id) {
         String sql = "DELETE FROM emprunteur WHERE emprunteur_id = ?";
 
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
             statement.setInt(1, id);
             statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            _df.closeConnection();
         }
     }
 }

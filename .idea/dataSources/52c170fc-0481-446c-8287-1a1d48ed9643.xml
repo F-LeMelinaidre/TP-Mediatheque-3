@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="mediatheque@localhost">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.52">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.53">
     <root id="1">
       <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -1203,17 +1203,17 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </table>
     <column id="307" parent="300" name="auteur_id">
       <AutoIncrement>13</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="308" parent="300" name="nom">
-      <DasType>varchar(45)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="309" parent="300" name="prenom">
-      <DasType>varchar(45)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <index id="310" parent="300" name="PRIMARY">
       <ColNames>auteur_id</ColNames>
@@ -1227,13 +1227,13 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </key>
     <column id="312" parent="301" name="category_id">
       <AutoIncrement>2</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="313" parent="301" name="label">
-      <DasType>varchar(45)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <index id="314" parent="301" name="PRIMARY">
       <ColNames>category_id</ColNames>
@@ -1246,14 +1246,14 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="316" parent="302" name="category_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="317" parent="302" name="subcategory_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <foreign-key id="318" parent="302" name="fk_category_has_subcategory_category1">
       <ColNames>category_id</ColNames>
@@ -1285,22 +1285,22 @@ subcategory_id</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="324" parent="303" name="emprunteur_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="325" parent="303" name="media_id">
-      <DasType>varchar(45)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="326" parent="303" name="date_emprunt">
-      <DasType>date|0s</DasType>
       <Position>3</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <column id="327" parent="303" name="date_retour">
-      <DasType>date|0s</DasType>
       <Position>4</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <foreign-key id="328" parent="303" name="fk_emprunteur_has_media_emprunteur1">
       <ColNames>emprunteur_id</ColNames>
@@ -1333,21 +1333,21 @@ media_id</ColNames>
     </key>
     <column id="334" parent="304" name="emprunteur_id">
       <AutoIncrement>61</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="335" parent="304" name="nom">
-      <DasType>varchar(45)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="336" parent="304" name="prenom">
-      <DasType>varchar(45)|0s</DasType>
       <Position>3</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="337" parent="304" name="date_naissance">
-      <DasType>date|0s</DasType>
       <Position>4</Position>
+      <StoredType>date|0s</StoredType>
     </column>
     <index id="338" parent="304" name="PRIMARY">
       <ColNames>emprunteur_id</ColNames>
@@ -1360,27 +1360,27 @@ media_id</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="340" parent="305" name="media_id">
-      <DasType>varchar(45)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="341" parent="305" name="title">
-      <DasType>varchar(45)|0s</DasType>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <column id="342" parent="305" name="description">
-      <DasType>longtext|0s</DasType>
       <Position>3</Position>
+      <StoredType>longtext|0s</StoredType>
     </column>
     <column id="343" parent="305" name="category_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="344" parent="305" name="subcategory_id">
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <foreign-key id="345" parent="305" name="fk_media_category_has_subcategory1">
       <ColNames>category_id
@@ -1408,14 +1408,14 @@ subcategory_id</ColNames>
     </key>
     <column id="349" parent="306" name="subcategory_id">
       <AutoIncrement>4</AutoIncrement>
-      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>int|0s</StoredType>
     </column>
     <column id="350" parent="306" name="label">
-      <DasType>varchar(45)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>varchar(45)|0s</StoredType>
     </column>
     <index id="351" parent="306" name="PRIMARY">
       <ColNames>subcategory_id</ColNames>
