@@ -17,6 +17,7 @@ public class Main extends Application {
         Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto/RobotoSlab-Regular.ttf"), 14);
         Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto/RobotoSlab-SemiBold.ttf"), 14);
         Font.loadFont(getClass().getResourceAsStream("/fonts/Ubuntu_Sans/UbuntuSans_Condensed-Medium.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/fonts/Ubuntu_Sans/UbuntuSans_Condensed-SemiBold.ttf"), 14);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("auth.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 360, 380);
         stage.setTitle("Hello!");
