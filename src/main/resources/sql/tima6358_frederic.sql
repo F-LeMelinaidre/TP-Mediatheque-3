@@ -36,7 +36,7 @@ CREATE TABLE `category` (
 -- Déchargement des données de la table `category`
 --
 
-INSERT INTO `category` (`category_id`, `label`) VALUES
+INSERT INTO categorie (categorie_id, `label`)VALUES
 (1, 'Livre'),
 (2, 'Dvd');
 
@@ -55,7 +55,7 @@ CREATE TABLE `category_has_subcategory` (
 -- Déchargement des données de la table `category_has_subcategory`
 --
 
-INSERT INTO `category_has_subcategory` (`category_id`, `subcategory_id`) VALUES
+INSERT INTO `category_has_subcategory` (categorie_id, `subcategory_id`) VALUES
 (1, 1),
 (1, 3),
 (1, 4),
@@ -231,7 +231,7 @@ CREATE TABLE `media` (
 -- Déchargement des données de la table `media`
 --
 
-INSERT INTO `media` (`media_id`, `title`, `description`, `category_id`, `subcategory_id`) VALUES
+INSERT INTO `media` (`media_id`, titre, `description`, categorie_id, sous_categorie_id)VALUES
 ('2023-02-00001', 'La Fille du train', 'Ce roman captivant suit Rachel, une femme en crise, qui prend chaque jour le même train et observe la vie d''un couple qu''elle admire à distance. Un jour, elle est témoin d''un événement choquant, puis se retrouve mêlée à la disparition de la femme. Rachel doit déterrer la vérité tout en luttant contre ses propres démons.', 1, 1),
 ('2023-02-00002', 'Le Petit Prince', 'Ce conte poétique raconte l''histoire d''un aviateur échoué dans le désert qui rencontre un jeune prince venu d''une petite planète. À travers les yeux du prince, il découvre des leçons de vie sur l''amitié, l''amour et la perte, révélant l''importance de voir au-delà des apparences et de cultiver l''innocence de l''enfance.', 1, 4),
 ('2023-02-00003', 'Le Silence des Agneaux', 'Dans ce thriller psychologique, l''agent du FBI Clarice Starling est chargée d''interroger le brillant mais dangereux tueur en série Hannibal Lecter, incarcéré dans un hôpital psychiatrique. Alors qu''elle cherche à comprendre l''esprit tordu de Lecter, elle doit également traquer un autre tueur qui enlève des femmes, plongeant ainsi dans un jeu d''esprit mortel.', 1, 1),
@@ -262,7 +262,7 @@ CREATE TABLE `subcategory` (
 -- Déchargement des données de la table `subcategory`
 --
 
-INSERT INTO `subcategory` (`subcategory_id`, `label`) VALUES
+INSERT INTO sous_categorie (sous_categorie_id, `label`) VALUES
 (1, 'Policier'),
 (2, 'Comedie'),
 (3, 'Science Fiction'),
@@ -282,8 +282,8 @@ ALTER TABLE `emprunteur`
 --
 -- Index pour la table `subcategory`
 --
-ALTER TABLE `subcategory`
-  ADD PRIMARY KEY (`subcategory_id`);
+ALTER TABLE sous_categorie
+  ADD PRIMARY KEY (sous_categorie_id);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -298,8 +298,8 @@ ALTER TABLE `emprunteur`
 --
 -- AUTO_INCREMENT pour la table `subcategory`
 --
-ALTER TABLE `subcategory`
-  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE sous_categorie
+  MODIFY sous_categorie_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

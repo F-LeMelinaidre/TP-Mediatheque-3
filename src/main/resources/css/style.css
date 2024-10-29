@@ -1,3 +1,6 @@
+.root {
+    --primary-dark: #253C59;
+}
 
 @font-face {
     font-family: 'BioRhyme Bold';
@@ -10,6 +13,13 @@
     src: url('../fonts/Ubuntu_Sans/UbuntuSans_Condensed-Medium.ttf');
 
 }
+
+@font-face {
+    font-family: 'Ubuntu Sans Condensed SemiBold';
+    src: url('../fonts/Ubuntu_Sans/UbuntuSans_Condensed-SemiBold.ttf');
+
+}
+
 .menu-bar > .container > .menu-button > .label,
 .menu-bar > .container > .menu-button:hover > .label,
 .menu-bar > .container > .menu-button:focused > .label,
@@ -23,12 +33,9 @@
     -fx-text-fill: #f1f1f1;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 1, 0.0, 1, 1);
 }
+
 .table-view .table-cell {
     -fx-text-fill: #253C59;
-}
-
-.bgColor {
-    -fx-background-color: #deff50;
 }
 
 .main-frame {
@@ -117,6 +124,7 @@
     -fx-border-width: 0;
     -fx-background-color: rgba(255, 255, 255, 0.50);
 }
+
 .table-row-cell:odd {
     -fx-background-color: rgba(255, 255, 255, 0.55);
 }
@@ -144,20 +152,24 @@
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
     -fx-background-color: transparent;
 }
+
 /** Supprime le fond blanc entre l'entête du tableau et le haut de la scroll bar*/
 .table-view .column-header-background .filler {
-     -fx-background-color: transparent;
-     -fx-padding: 0;
- }
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 .table-view > .virtual-flow > .scroll-bar > .increment-button:hover,
 .table-view > .virtual-flow > .scroll-bar > .decrement-button:hover {
     -fx-background-color: rgb(91, 108, 129);
 }
+
 .table-view > .virtual-flow > .scroll-bar:vertical .thumb,
 .table-view > .virtual-flow > .scroll-bar:vertical > .thumb {
     -fx-background-color: rgb(91, 108, 129);
 }
 
+/* FORMULAIRE */
 .main-form {
     -fx-padding: 8px 16px 16px 16px;
     -fx-border-radius: 4px;
@@ -166,16 +178,57 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 8, 0, 2, 4);
 }
 
-.label {
-    -fx-pref-height: 25px;
+.label-form {
     -fx-padding: 8px 0;
+    -fx-font-size: 14px;
     -fx-font-family: "BioRhyme Bold";
+    -fx-text-fill: rgba(255, 255, 255, 0.70);
+    -fx-text-alignment: CENTER;
 }
 
+.text-area {
+    -fx-background-color: transparent; /* Rendre le fond de base transparent pour éviter les conflits */
+}
+
+.text-area .content,
 .text-input {
     -fx-min-height: 32px;
     -fx-pref-height: 32px;
     -fx-font-size: 14px;
-    -fx-prompt-text-fill: #aaa;
+    -fx-text-fill: #f1f1f1;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.50);
     -fx-background-color: rgb(91, 108, 129);
+}
+
+.submit {
+    -fx-font-family: "Ubuntu Sans Condensed SemiBold";
+    -fx-font-size: 14px;
+    -fx-text-fill: rgb(72, 95, 126);
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-border-color: #D8E3F2;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #cde5ff 0%, #90A8C8 30%, #90A8C8 100%);
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 4, 0, 2, 2);
+}
+
+.submit:hover {
+    -fx-font-family: "Ubuntu Sans Condensed SemiBold";
+    -fx-font-size: 14px;
+    -fx-text-fill: #f1f1f1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-border-color: #f1f1f1;
+    -fx-background-color: #90A8C8;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 4, 0, 0, 0);
+}
+
+.submit:armed {
+    -fx-text-fill: #f1f1f1;
+    -fx-border-color: #BF8D30;
+    -fx-background-color: #BF8D30;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 4, 0, 0, 0);
 }
