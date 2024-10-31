@@ -43,6 +43,7 @@ public class AjoutEmpruntController {
 
     @FXML
     private void ajouterEmprunt() {
+        // TODO MODIFIER LA VALIDATION VERIFIER L EXISTANCE DES ID EMPRUNTEUR ET MEDIA
         String emprunteurIdText = emprunteurIdField.getText();
         String mediaId = mediaIdField.getText();
         LocalDate dateEmprunt = dateEmpruntField.getValue();
@@ -66,6 +67,7 @@ public class AjoutEmpruntController {
 
         try {
             empruntDAO.ajouterEmprunt(nouvelEmprunt);
+            
             afficherAlerte("Succès", "Emprunt ajouté avec succès !");
             resetFields();
         } catch (Exception e) {

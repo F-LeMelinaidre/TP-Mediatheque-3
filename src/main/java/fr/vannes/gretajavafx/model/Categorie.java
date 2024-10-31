@@ -11,7 +11,7 @@ public class Categorie {
     private int categorieId;
     private String label;
 
-    private Map<Integer, SousCategorie> sousCategorieMap = new HashMap<Integer, SousCategorie>();
+    private ArrayList<SousCategorie> sousCategorieMap = new ArrayList<SousCategorie>();
 
     public Categorie(int categorieId, String label) {
         this.categorieId = categorieId;
@@ -38,10 +38,10 @@ public class Categorie {
     }
 
     public void addSousCategorie(SousCategorie sousCategorie) {
-        sousCategorieMap.put(sousCategorie.getIdSousCategorie(), sousCategorie);
+        sousCategorieMap.add(sousCategorie);
     }
 
-    public Map<Integer, SousCategorie> getSousCategories() {
+    public ArrayList<SousCategorie> getSousCategories() {
         return sousCategorieMap;
     }
 

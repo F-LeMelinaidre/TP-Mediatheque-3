@@ -20,7 +20,7 @@ public class MediaDAOImpl implements MediaDAO<Media>
     private static Connection _conn = null;
     private static DAOFactory _df;
 
-    private static final String INSERT = "INSERT INTO media (media_id, titre, description, categorie_id, sous_categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO media (media_id, titre, description, categorie_id, sous_categorie_id) VALUES (?, ?, ?, ?, ?)";
 
     private static final String READONE = "SELECT m.media_id, m.titre, m.description, " +
                                           "c.categorie_id AS categorieId, c.label AS categorieLabel, " +
@@ -132,6 +132,7 @@ public class MediaDAOImpl implements MediaDAO<Media>
 
         try (PreparedStatement ps = _conn.prepareStatement(INSERT)) {
 
+            System.out.println(media.getMediaId());
             ps.setString(1, media.getMediaId());
             ps.setString(2, media.getTitre());
             ps.setString(3, media.getDescription());

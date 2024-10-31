@@ -110,6 +110,7 @@ public class Media {
         String ref = String.format("%05d", currentYearCounter);
 
         this.mediaId = CURRENT_YEAR + "-" + CURRENT_MONTH + "-" + ref;
+        System.out.println(CURRENT_YEAR + "-" + CURRENT_MONTH + "-" + ref + " - " + this.mediaId);
     }
 
 

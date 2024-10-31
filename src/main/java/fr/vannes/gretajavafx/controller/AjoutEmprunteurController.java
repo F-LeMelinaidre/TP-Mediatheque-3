@@ -36,8 +36,6 @@ public class AjoutEmprunteurController {
 
     @FXML
     public void initialize() {
-        // Initialisation des éléments si nécessaire
-        //this.ajouterEmprunteur();
     }
 
     @FXML
@@ -54,7 +52,7 @@ public class AjoutEmprunteurController {
         Emprunteur nouvelEmprunteur = new Emprunteur(nom, prenom, dateNaissance, null);
 
         emprunteurDAO.ajouterEmprunteur(nouvelEmprunteur);
-
+        // TODO MODIFIER L AFFICHAGE EN CAS DE SUCCESS
         afficherAlerte("Succès", "L'emprunteur a été ajouté avec succès.");
 
         reinitialiserChamps();
