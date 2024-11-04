@@ -4,13 +4,11 @@ import fr.vannes.gretajavafx.dao.DAOFactory;
 import fr.vannes.gretajavafx.dao.categorie.CategorieDAO;
 import fr.vannes.gretajavafx.dao.categorie.CategorieDAOImpl;
 import fr.vannes.gretajavafx.model.Categorie;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import java.time.LocalDate;
 import java.util.List;
 
 public class AjoutMediaController {
@@ -48,7 +46,7 @@ public class AjoutMediaController {
             Categorie selectedCategorie = categorieBox.getValue(); // Correction ici
             if (selectedCategorie != null) {
                 // Mise à jour du ComboBox des sous-catégories
-                sousCategorieBox.getItems().setAll(selectedCategorie.getSousCategories().values());
+                sousCategorieBox.getItems().setAll(String.valueOf(selectedCategorie.getSousCategories().values()));
                 sousCategorieBox.getSelectionModel().clearSelection();
             }
         });

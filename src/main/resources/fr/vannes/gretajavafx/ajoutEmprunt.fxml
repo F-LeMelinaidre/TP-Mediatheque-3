@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+
 <VBox fx:id="ajoutEmprunt" maxHeight="800.0" maxWidth="900.0" minHeight="-Infinity" minWidth="350.0" spacing="16.0" stylesheets="@../../../css/style.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.AjoutEmpruntController">
    <children>
       <Label alignment="TOP_LEFT" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="900.0" minWidth="335.0" styleClass="main-container-title" text="Ajouter un emprunt">
@@ -17,18 +18,18 @@
             <Insets />
          </VBox.margin>
       </Label>
-      <FlowPane columnHalignment="CENTER" hgap="16.0" maxWidth="512.0" prefWrapLength="900.0" vgap="8.0" VBox.vgrow="ALWAYS">
+      <FlowPane columnHalignment="CENTER" hgap="16.0" maxWidth="512.0" prefWrapLength="900.0" vgap="8.0">
          <children>
              <TextField fx:id="emprunteurIdField" alignment="TOP_LEFT" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="160.0" promptText="Entrez l'ID de l'emprunteur" />
              <TextField fx:id="mediaIdField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="160.0" promptText="Entrez l'ID du média" />
              <DatePicker fx:id="dateEmpruntField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="160.0" promptText="Date d'emprunt" />
          </children>
       </FlowPane>
-      <AnchorPane fx:id="empruntDetail" prefHeight="200.0" VBox.vgrow="ALWAYS" />
+      <FlowPane fx:id="empruntDetail" />
       <HBox alignment="TOP_RIGHT">
          <children>
          
-                                                                                                                            <Button fx:id="ajouterButton" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" maxWidth="160.0" minWidth="-Infinity" onAction="#ajouterEmprunt" prefWidth="80.0" styleClass="submit" text="Valider" textAlignment="CENTER" />
+                                                                                                                                  <Button fx:id="ajouterButton" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" maxWidth="160.0" minWidth="-Infinity" onAction="#ajouterEmprunt" prefWidth="80.0" styleClass="submit" text="Valider" textAlignment="CENTER" />
             <Button fx:id="resetButton" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" minWidth="-Infinity" onAction="#resetFields" prefWidth="80.0" styleClass="submit" text="Effacer" textAlignment="CENTER" />
          </children>
       </HBox>

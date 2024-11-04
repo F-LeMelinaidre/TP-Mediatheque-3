@@ -42,7 +42,7 @@ public class AjoutEmpruntController {
     @FXML
     private Button resetButton;
     @FXML
-    private AnchorPane empruntDetail;
+    private FlowPane empruntDetail;
 
     @FXML
     private VBox emprunteurDetail;
@@ -127,7 +127,6 @@ public class AjoutEmpruntController {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("emprunteurDetail.fxml"));
 
             emprunteurDetail = loader.load();
-            AnchorPane.setTopAnchor(emprunteurDetail, 0.0);
 
             empruntDetail.getChildren().clear();
             empruntDetail.getChildren().add(emprunteurDetail);
