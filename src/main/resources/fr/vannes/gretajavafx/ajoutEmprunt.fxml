@@ -41,7 +41,7 @@
             <fx:include fx:id="emprunteurDetail" source="emprunteurDetail.fxml" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <Label fx:id="emprunteurMessageLabel" alignment="TOP_CENTER" textFill="red" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         </GridPane>
-        <HBox alignment="TOP_RIGHT">
+        <HBox alignment="TOP_RIGHT" spacing="16.0">
             <children>
                 <Button fx:id="ajouterButton" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" maxWidth="160.0" minWidth="-Infinity" onAction="#ajouterEmprunt" prefWidth="80.0" styleClass="submit" text="Valider" textAlignment="CENTER" />
                 <Button fx:id="resetButton" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" minWidth="-Infinity" onAction="#resetFields" prefWidth="80.0" styleClass="submit" text="Effacer" textAlignment="CENTER" />

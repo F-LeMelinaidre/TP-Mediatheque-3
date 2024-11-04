@@ -53,6 +53,7 @@ public class AjoutEmpruntController {
     private VBox mediaDetail;
     @FXML
     private Label mediaMessageLabel;
+    private boolean mediaDisponible = false;
 
     private EmpruntDAO empruntDAO;
     private EmprunteurDAO emprunteurDAO;
@@ -73,6 +74,7 @@ public class AjoutEmpruntController {
         emprunteurMessageLabel.setVisible(false);
         mediaDetail.setVisible(false);
         mediaMessageLabel.setVisible(false);
+        ajouterButton.setDisable(true);
 
         emprunteurIdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -174,8 +176,9 @@ public class AjoutEmpruntController {
                 emprunteurMessageLabel.setVisible(true);
             }
 
-
         }
+
+        mettreAJourEtatBoutonAjouter();
     }
 
     //TODO Ajouter: Si le média n existe pas, ne pas afficher mediaDetail (laisser/mettre setVisible(false)) et afficher un message
@@ -191,6 +194,7 @@ public class AjoutEmpruntController {
             if (media != null) {
                 Label disponibiliteLabel = (Label) mediaDetail.lookup("#disponibiliteLabel");
                 disponibiliteLabel.setText(media.estDisponibleText());
+                mediaDisponible = media.estDisponible();
 
                 Label titreLabel = (Label) mediaDetail.lookup("#titreLabel");
                 titreLabel.setText(media.getTitre());
@@ -207,7 +211,17 @@ public class AjoutEmpruntController {
                 mediaMessageLabel.setText("Aucun média trouvé avec cet identifiant!");
                 mediaMessageLabel.setVisible(true);
             }
+
         }
+
+        mettreAJourEtatBoutonAjouter();
+    }
+
+    private void mettreAJourEtatBoutonAjouter() {
+        boolean emprunteurVisible = emprunteurDetail.isVisible();
+        boolean mediaVisible = mediaDetail.isVisible();
+
+        ajouterButton.setDisable(!(emprunteurVisible && mediaVisible && mediaDisponible));
     }
 
     private void afficherAlerte(String titre, String message) {
