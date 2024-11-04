@@ -24,6 +24,8 @@ public interface EmpruntDAO {
     // Méthode pour récupérer tous les emprunts
     List<Emprunt> getTousLesEmprunts() throws Exception;
 
+    boolean estDisponible(String mediaId);
+
     Emprunteur getEmprunteur(ResultSet rs) throws SQLException;
 
     Media getMedia(ResultSet rs, Categorie categorie, SousCategorie sousCategorie) throws SQLException;

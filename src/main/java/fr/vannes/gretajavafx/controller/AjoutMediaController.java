@@ -48,7 +48,7 @@ public class AjoutMediaController {
     public void initialize()
     {
         List<Categorie> categories = categorieDAO.findAll(true);
-        System.out.println(categories);
+
         this.categorieBox.getItems().add(categorieDefaut);
 
         if (categories != null) {
@@ -63,13 +63,10 @@ public class AjoutMediaController {
     @FXML
     private void categorieSelectionne()
     {
-        System.out.println(categorieBox.getValue());
 
         Categorie selectedCategorie = this.categorieBox.getValue();
         if (selectedCategorie != null) {
             this.sousCategorieBox.getItems().clear();
-
-System.out.println(selectedCategorie.getSousCategories());
 
             this.sousCategorieBox.getItems().add(this.sousCategorieDefaut);
             this.sousCategorieBox.getItems().addAll(selectedCategorie.getSousCategories());

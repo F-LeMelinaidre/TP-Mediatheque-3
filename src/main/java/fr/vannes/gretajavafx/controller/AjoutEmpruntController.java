@@ -12,6 +12,8 @@ import fr.vannes.gretajavafx.model.Emprunt;
 import fr.vannes.gretajavafx.model.Emprunteur;
 import fr.vannes.gretajavafx.model.Media;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,8 +22,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
+
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AjoutEmpruntController {
 
@@ -39,11 +44,16 @@ public class AjoutEmpruntController {
     private Button ajouterButton;
     @FXML
     private Button resetButton;
-    @FXML
-    private FlowPane empruntDetail;
 
     @FXML
     private VBox emprunteurDetail;
+    @FXML
+    private Label emprunteurMessageLabel;
+    @FXML
+    private VBox mediaDetail;
+    @FXML
+    private Label mediaMessageLabel;
+
     private EmpruntDAO empruntDAO;
     private EmprunteurDAO emprunteurDAO;
     private MediaDAO mediaDAO;
@@ -55,8 +65,15 @@ public class AjoutEmpruntController {
         this.mediaDAO = MediaDAOImpl.get_instance(daoFactory);
     }
 
+    // TODO Penser à vider les éléments des FXML details
     @FXML
     public void initialize() {
+
+        emprunteurDetail.setVisible(false);
+        emprunteurMessageLabel.setVisible(false);
+        mediaDetail.setVisible(false);
+        mediaMessageLabel.setVisible(false);
+
         emprunteurIdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
@@ -67,6 +84,7 @@ public class AjoutEmpruntController {
 
             }
         });
+
         mediaIdField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
@@ -78,10 +96,21 @@ public class AjoutEmpruntController {
             }
         });
 
-        ajoutEmprunt.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-
-            
-
+        dateEmpruntField.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        // Désactiver les cellules de date inférieures à aujourd'hui
+                        if (item != null && item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optionnel: Change la couleur de fond
+                        }
+                    }
+                };
+            }
         });
     }
 
@@ -116,35 +145,68 @@ public class AjoutEmpruntController {
         }
     }
 
+    //TODO Ajouter: Si l'emprunteur n existe pas, ne pas afficher emprunteurDetail (laisser/mettre setVisible(false)) et afficher un message
+    // Ajouter le control du type en entrée
     private void afficherEmprunteur() throws IOException
     {
-        int emprunteurId = Integer.parseInt(emprunteurIdField.getText());
+        int emprunteurId = (emprunteurIdField.getText().isEmpty())? 0 : Integer.parseInt(emprunteurIdField.getText());
 
         if (emprunteurId != 0) {
-            Emprunteur emprunteur = emprunteurDAO.getEmprunteurById(emprunteurId);
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("emprunteurDetail.fxml"));
 
-            emprunteurDetail = loader.load();
+            Emprunteur emprunteur = emprunteurDAO.getEmprunteurById(emprunteurId, true);
 
-            empruntDetail.getChildren().clear();
-            empruntDetail.getChildren().add(emprunteurDetail);
+            if (emprunteur != null) {
+                Label nomLabel = (Label) emprunteurDetail.lookup("#nomLabel");
+                nomLabel.setText(emprunteur.getNom());
+                Label prenomLabel = (Label) emprunteurDetail.lookup("#prenomLabel");
+                prenomLabel.setText(emprunteur.getPrenom());
 
-            Label nomLabel = (Label) emprunteurDetail.lookup("#nomLabel");
-            nomLabel.setText(emprunteur.getNom());
-            Label prenomLabel = (Label) emprunteurDetail.lookup("#prenomLabel");
-            prenomLabel.setText(emprunteur.getPrenom());
+                List<Emprunt> empruntList = emprunteur.getEmpruntsNonRendus();
+                ObservableList<Emprunt> emprunts = FXCollections.observableArrayList(empruntList);
+                ListView empruntsListView = (ListView) emprunteurDetail.lookup("#empruntList");
+                empruntsListView.setItems(emprunts);
+
+                emprunteurMessageLabel.setVisible(false);
+                emprunteurDetail.setVisible(true);
+            } else {
+                emprunteurDetail.setVisible(false);
+                emprunteurMessageLabel.setText("Aucun emprunteur trouvé avec cet identifiant!");
+                emprunteurMessageLabel.setVisible(true);
+            }
+
 
         }
     }
+
+    //TODO Ajouter: Si le média n existe pas, ne pas afficher mediaDetail (laisser/mettre setVisible(false)) et afficher un message
+    // Ajouter le control du type en entrée
     private void afficherMedia() throws IOException
     {
         String mediaId = mediaIdField.getText();
 
         if (!mediaId.isEmpty()) {
-            Media media = mediaDAO.getMediaById(mediaId);
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("mediaDetail.fxml"));
-            Parent root = loader.load();
 
+            Media media = mediaDAO.getMediaWithDisponibilite(mediaId);
+
+            if (media != null) {
+                Label disponibiliteLabel = (Label) mediaDetail.lookup("#disponibiliteLabel");
+                disponibiliteLabel.setText(media.estDisponibleText());
+
+                Label titreLabel = (Label) mediaDetail.lookup("#titreLabel");
+                titreLabel.setText(media.getTitre());
+
+                Label categorieLabel = (Label) mediaDetail.lookup("#categorieLabel");
+                categorieLabel.setText(media.getCategorieLabel());
+                Label sousCategorieLabel = (Label) mediaDetail.lookup("#sousCategorieLabel");
+                sousCategorieLabel.setText(media.getSousCategorieLabel());
+
+                mediaMessageLabel.setVisible(false);
+                mediaDetail.setVisible(true);
+            } else {
+                mediaDetail.setVisible(false);
+                mediaMessageLabel.setText("Aucun média trouvé avec cet identifiant!");
+                mediaMessageLabel.setVisible(true);
+            }
         }
     }
 
@@ -160,6 +222,5 @@ public class AjoutEmpruntController {
         emprunteurIdField.clear();
         mediaIdField.clear();
         dateEmpruntField.setValue(null);
-        empruntDetail.getChildren().clear();
     }
 }

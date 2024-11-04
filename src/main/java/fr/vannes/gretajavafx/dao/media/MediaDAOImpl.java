@@ -1,6 +1,8 @@
 package fr.vannes.gretajavafx.dao.media;
 
 import fr.vannes.gretajavafx.dao.DAOFactory;
+import fr.vannes.gretajavafx.dao.emprunt.EmpruntDAO;
+import fr.vannes.gretajavafx.dao.emprunt.EmpruntDAOImpl;
 import fr.vannes.gretajavafx.model.Categorie;
 import fr.vannes.gretajavafx.model.Media;
 import fr.vannes.gretajavafx.model.SousCategorie;
@@ -178,6 +180,17 @@ public class MediaDAOImpl implements MediaDAO
             _df.closeConnection();
         }
 
+        return media;
+    }
+
+    @Override
+    public Media getMediaWithDisponibilite(String id)
+    {
+        Media media = getMediaById(id);
+        if(media != null) {
+            boolean disponible = EmpruntDAOImpl.get_instance(_df).estDisponible(id);
+            media.setDisponible(disponible);
+        }
         return media;
     }
 

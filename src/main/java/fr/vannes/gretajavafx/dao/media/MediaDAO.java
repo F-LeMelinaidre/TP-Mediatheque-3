@@ -13,6 +13,7 @@ public interface MediaDAO {
     int count();
     Boolean create(Media media);
     Media getMediaById(String id);
+    Media getMediaWithDisponibilite(String id);
     ArrayList<Media> findAll();
     Media update(Media media);
     Boolean delete(String id);

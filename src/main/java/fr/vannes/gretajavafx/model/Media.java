@@ -22,6 +22,7 @@ public class Media {
     private String description;
     private Categorie categorie;
     private SousCategorie sousCategorie;
+    private boolean disponible;
 
     public static int totalMedia;
     public static Map<Integer, Integer> totalMediaByYear;
@@ -157,6 +158,19 @@ public class Media {
 
     public String getSousCategorieLabel() {
         return sousCategorie.getLabel();
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public boolean estDisponible() {
+        return this.disponible;
+    }
+
+    public String estDisponibleText() {
+
+        return this.estDisponible()? "Disponible" : "Non disponible";
     }
 
     @Override
