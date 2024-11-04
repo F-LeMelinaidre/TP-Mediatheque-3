@@ -52,10 +52,6 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
         return null;
     }
 
-    @Override
-    public ArrayList<Categorie> findAll() {
-        return null;
-    }
 
     @Override
     public Categorie update(Categorie categorie) {
@@ -96,9 +92,10 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
                 if(!categorieIds.contains(categorieId)) {
                     categorie = new Categorie(categorieId, categorieLabel);
                     categorieList.add(categorie);
+                    categorieIds.add(categorieId);
                 }
 
-                if(!sousCategories) {
+                if(sousCategories) {
                     int sousCategorieId = rs.getInt("sousCategorieId");
                     String sousCategorieLabel = rs.getString("sousCategorieLabel");
                     SousCategorie sousCategorie = new SousCategorie(sousCategorieId, sousCategorieLabel);
@@ -112,7 +109,7 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
             _df.closeResultSet(rs);
             _df.closeConnection();
         }
-
+        System.out.println(categorieList);
         return categorieList;
     }
 }

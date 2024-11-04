@@ -1,17 +1,13 @@
 package fr.vannes.gretajavafx.model;
 
-import fr.vannes.gretajavafx.dao.categorie.CategorieDAOImpl;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Categorie {
 
     private int categorieId;
     private String label;
 
-    private Map<Integer, SousCategorie> sousCategorieMap = new HashMap<Integer, SousCategorie>();
+    private ArrayList<SousCategorie> sousCategorieList = new ArrayList<>();
 
     public Categorie(int categorieId, String label) {
         this.categorieId = categorieId;
@@ -38,11 +34,11 @@ public class Categorie {
     }
 
     public void addSousCategorie(SousCategorie sousCategorie) {
-        sousCategorieMap.put(sousCategorie.getIdSousCategorie(), sousCategorie);
+        this.sousCategorieList.add(sousCategorie);
     }
 
-    public Map<Integer, SousCategorie> getSousCategories() {
-        return sousCategorieMap;
+    public ArrayList<SousCategorie> getSousCategories() {
+        return sousCategorieList;
     }
 
     @Override

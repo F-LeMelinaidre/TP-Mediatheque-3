@@ -4,8 +4,13 @@
 
 }
 
+
 .main-frame {
     -fx-background-color: #acacac;
+}
+
+.auth-pane {
+    -fx-background-color: #253C59;
 }
 
 /* MENUBAR */
