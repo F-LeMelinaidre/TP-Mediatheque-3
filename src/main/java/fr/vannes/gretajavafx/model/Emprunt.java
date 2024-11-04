@@ -10,6 +10,12 @@ public class Emprunt {
     private Emprunteur emprunteur;
     private Media media;
 
+    public Emprunt(int emprunteur_id, String mediaId, LocalDate dateEmprunt) {
+        this.emprunteurId = emprunteur_id;
+        this.mediaId = mediaId;
+        this.dateEmprunt = dateEmprunt;
+    }
+
     public Emprunt(int emprunteur_id, String mediaId, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.emprunteurId = emprunteur_id;
         this.mediaId = mediaId;

@@ -1,0 +1,270 @@
+.root { -fx-background-color: rgba(0, 0, 0, 0); }
+
+@font-face {
+    font-family: 'BioRhyme Bold';
+    src: url('../fonts/BioRhyme/BioRhyme-Bold.ttf');
+
+}
+
+@font-face {
+    font-family: 'Ubuntu Sans Condensed Medium';
+    src: url('../fonts/Ubuntu_Sans/UbuntuSans_Condensed-Medium.ttf');
+
+}
+
+@font-face {
+    font-family: 'Ubuntu Sans Condensed SemiBold';
+    src: url('../fonts/Ubuntu_Sans/UbuntuSans_Condensed-SemiBold.ttf');
+
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('../fonts/Kaushan/KaushanScript-Regular.ttf');
+
+}
+
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('../fonts/Roboto/RobotoSlab-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Slab SemiBold';
+    src: url('../fonts/Roboto/RobotoSlab-SemiBold.ttf');
+}
+
+.menu-bar > .container > .menu-button > .label,
+.menu-bar > .container > .menu-button:hover > .label,
+.menu-bar > .container > .menu-button:focused > .label,
+.menu-bar > .container > .menu-button:showing > .label,
+.menu-item .label,
+.menu-item .label,
+.menu-item .label,
+.table-view,
+.table-view .column-header .label,
+.label {
+    -fx-text-fill: #f1f1f1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 1, 0.0, 1, 1);
+}
+
+.main-frame {
+    -fx-background-color: #acacac;
+}
+
+/* Fenêtre de connexion */
+.auth-pane {
+    -fx-background-color: transparent;
+}
+.auth-grid {
+    -fx-background-color: #253C59;
+}
+.logo-label {
+    -fx-font-family: 'Kaushan Script';
+    -fx-font-size: 32;
+    -fx-text-fill: #ffb700;
+}
+
+/* MENUBAR */
+.nav-bar {
+    -fx-font-family: "Ubuntu ExtraBold";
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-background-color: #253C59;
+}
+
+.menu-bar > .container > .menu-button .label {
+    -fx-min-height: 24px;
+    -fx-padding: 0 0 1px 0;
+    -fx-font-weight: bold;
+}
+
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:focused,
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: #BF8D30;
+}
+
+/* MENUBAR SUBMENU */
+.context-menu {
+    -fx-translate-y: 8px;
+    -fx-min-width: 100px;
+    -fx-padding: 0;
+    -fx-border-color: #BF8D30;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #253C59;
+}
+
+.menu-item {
+    -fx-padding: 4px 16px;
+}
+
+.menu-item:hover,
+.menu-item:focused,
+.menu-item:showing {
+    -fx-background-color: #BF8D30;
+}
+
+/* TABLEVIEW */
+.table-view {
+    -fx-background-color: #253C59;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 8, 0, 2, 4);
+}
+
+.table-view .column-header {
+    -fx-padding: 0;
+    -fx-border-width: 1px;
+    -fx-border-color: transparent rgb(91, 108, 129) rgba(255, 255, 255, 0.5) transparent;
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header.sous-categorie-media {
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-padding: 0 8px 4px 8px;
+    -fx-min-height: 28px;
+    -fx-pref-height: 28px;
+    -fx-font-family: "BioRhyme";
+    -fx-text-fill: rgba(255, 255, 255, 0.60);
+    -fx-font-weight: 800;
+    -fx-font-size: 13px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 1, 0.0, 1, 1);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .label {
+}
+
+.table-row-cell {
+    -fx-border-width: 0;
+    -fx-background-color: rgba(255, 255, 255, 0.50);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.55);
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
+
+.titre-media.table-column {
+    -fx-padding: 0 0 0 8px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .table-cell {
+    -fx-font-family: "Ubuntu Sans Condensed Medium";
+    -fx-font-size: 14px;
+    -fx-border-color: transparent rgb(91, 108, 129) transparent transparent;
+    -fx-text-fill: #253C59;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+/** Supprime le fond blanc entre l'entête du tableau et le haut de la scroll bar*/
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button:hover,
+.table-view > .virtual-flow > .scroll-bar > .decrement-button:hover {
+    -fx-background-color: rgb(91, 108, 129);
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical .thumb,
+.table-view > .virtual-flow > .scroll-bar:vertical > .thumb {
+    -fx-background-color: rgb(91, 108, 129);
+}
+
+/* FORMULAIRE */
+.main-form {
+    -fx-padding: 16px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(204, 204, 204);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 1, 1);
+}
+
+.label-form {
+
+    -fx-font-size: 14px;
+    -fx-font-family: "Roboto Slab";
+    -fx-text-fill: #253C59;
+    -fx-text-alignment: CENTER;
+    -fx-effect: none;
+}
+
+.text-input {
+    -fx-min-height: 32px;
+    -fx-pref-height: 32px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #f1f1f1;
+    -fx-prompt-text-fill: rgb(91, 108, 129);
+    -fx-border-color: rgb(91, 108, 129);
+    -fx-border-width: 0 0 1px 0;
+    -fx-background-color: rgb(214, 214, 214);
+}
+.text-area {
+    -fx-background-color: transparent; /* Rendre le fond de base transparent pour éviter les conflits */
+}
+.text-area .content {
+    -fx-background-color: rgb(214, 214, 214); /* Couleur de fond */
+}
+
+.submit {
+    -fx-font-family: "Ubuntu Sans Condensed SemiBold";
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.65);
+    -fx-background-color: #547391;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+}
+
+.submit:hover {
+    -fx-text-fill: #f1f1f1;
+    -fx-background-color: #BF8D30;
+}
+
+.submit:armed {
+    -fx-text-fill: #f1f1f1;
+    -fx-background-color: rgb(72, 95, 126);
+}
+
+.submit-close {
+    -fx-background-radius: 4;
+    -fx-background-color: #253C59;
+    -fx-background-image: url("../icons/close24.png");
+    -fx-background-insets: 0;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-border-radius: 4;
+    -fx-border-color: none;
+    -fx-effect: none;
+}
+
+.submit-close:hover {
+    -fx-border-color: none;
+    -fx-background-color: #8a0000;
+}
+.auth-pane .text-input {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: rgb(72, 95, 126);
+    -fx-background-color: none;
+}

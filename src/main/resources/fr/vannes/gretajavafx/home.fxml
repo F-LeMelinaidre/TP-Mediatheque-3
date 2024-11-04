@@ -10,7 +10,7 @@
 
 <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="main-frame" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vannes.gretajavafx.controller.HomeController">
    <children>
-        <MenuBar fx:id="menuBar" maxHeight="32.0" styleClass="nav-bar" VBox.vgrow="ALWAYS">
+        <MenuBar fx:id="menuBar" maxHeight="-Infinity" styleClass="nav-bar">
             <menus>
                 <Menu fx:id="ajoutMenu" mnemonicParsing="false" styleClass="nav-item" text="Ajouter">
                     <items>
@@ -32,9 +32,6 @@
                     </items>
                 </Menu>
             </menus>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -42,9 +39,9 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
         </MenuBar>
-      <StackPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="300.0" VBox.vgrow="ALWAYS">
+      <StackPane fx:id="rootPane" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="300.0" styleClass="main-container" VBox.vgrow="ALWAYS">
          <VBox.margin>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            <Insets bottom="8.0" left="8.0" right="8.0" top="16.0" />
          </VBox.margin>
       </StackPane>
    </children>

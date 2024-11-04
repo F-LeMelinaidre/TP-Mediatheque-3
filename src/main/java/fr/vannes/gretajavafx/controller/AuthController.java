@@ -34,14 +34,6 @@ public class AuthController
     }
 
     /**
-     * Fermeture de l'app
-     */
-    public void onCloseClick()
-    {
-        Platform.exit();
-    }
-
-    /**
      * Gestion de l'authentification
      */
     public void onValidateClick()
@@ -52,6 +44,7 @@ public class AuthController
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         if (login.getText().equals(Configuration.login) &&
             CryptPWD.getSHA512SecurePassword(pwd.getText()).equals(Configuration.password)) {
 

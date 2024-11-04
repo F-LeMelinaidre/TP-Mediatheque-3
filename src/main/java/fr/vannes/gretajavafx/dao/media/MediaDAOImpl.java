@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MediaDAOImpl implements MediaDAO<Media>
+public class MediaDAOImpl implements MediaDAO
 {
 
     private static MediaDAOImpl _instance = null;
@@ -152,7 +152,7 @@ public class MediaDAOImpl implements MediaDAO<Media>
     }
 
     @Override
-    public Media findById(String id) {
+    public Media getMediaById(String id) {
         Media media = null;
         ResultSet rs = null;
 
