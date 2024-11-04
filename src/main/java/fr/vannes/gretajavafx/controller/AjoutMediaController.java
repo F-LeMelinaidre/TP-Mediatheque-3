@@ -37,19 +37,6 @@ public class AjoutMediaController {
     @FXML
     public void initialize() {
 
-        List<Categorie> categories = this.categorieDAO.findAll();
-        categorieBox.getItems().addAll(categories);
-
-        categorieBox.setValue(categories.get(0));
-
-        categorieBox.setOnAction(event -> {
-            Categorie selectedCategorie = categorieBox.getValue(); // Correction ici
-            if (selectedCategorie != null) {
-                // Mise à jour du ComboBox des sous-catégories
-                sousCategorieBox.getItems().setAll(String.valueOf(selectedCategorie.getSousCategories().values()));
-                sousCategorieBox.getSelectionModel().clearSelection();
-            }
-        });
     }
 
     @FXML
