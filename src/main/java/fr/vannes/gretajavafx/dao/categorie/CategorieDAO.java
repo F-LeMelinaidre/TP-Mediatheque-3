@@ -11,5 +11,4 @@ public interface CategorieDAO<Categorie> {
     ArrayList<Categorie> findAll(boolean sousCategories);
     Categorie update(Categorie categorie);
     Boolean delete(Categorie categorie);
-
 }

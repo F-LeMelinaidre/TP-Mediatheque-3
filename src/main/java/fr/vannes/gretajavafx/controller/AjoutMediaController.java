@@ -7,8 +7,10 @@ import fr.vannes.gretajavafx.dao.media.MediaDAOImpl;
 import fr.vannes.gretajavafx.model.Categorie;
 import fr.vannes.gretajavafx.model.Media;
 import fr.vannes.gretajavafx.model.SousCategorie;
+
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -16,6 +18,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AjoutMediaController {
+    @FXML
+    private GridPane mediaGrid;
+
     @FXML
     private GridPane mediaGrid;
     @FXML
@@ -32,7 +37,9 @@ public class AjoutMediaController {
     private Button enregistrerButton;
 
     private DAOFactory daoFactory;
+
     private CategorieDAOImpl categorieDAO;
+
     private final MediaDAOImpl mediaDAO;
     private final Categorie categorieDefaut = new Categorie(-1, "Sélectionnez une catégorie");
     private final SousCategorie sousCategorieDefaut = new SousCategorie(-1, "Sélectionnez un genre");
@@ -75,7 +82,7 @@ public class AjoutMediaController {
         }
     }
 
-    @FXML
+  
     private void ajouterMedia()
     {
         boolean valid = true;

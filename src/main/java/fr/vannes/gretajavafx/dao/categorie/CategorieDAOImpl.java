@@ -52,7 +52,6 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
         return null;
     }
 
-
     @Override
     public Categorie update(Categorie categorie) {
         return null;
@@ -112,4 +111,15 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
         System.out.println(categorieList);
         return categorieList;
     }
+
+    @Override
+    public Categorie update(Categorie categorie) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(Categorie categorie) {
+        return null;
+    }
+
 }
