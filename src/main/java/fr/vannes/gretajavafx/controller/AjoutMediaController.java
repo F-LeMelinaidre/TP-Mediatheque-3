@@ -7,15 +7,19 @@ import fr.vannes.gretajavafx.dao.media.MediaDAOImpl;
 import fr.vannes.gretajavafx.model.Categorie;
 import fr.vannes.gretajavafx.model.Media;
 import fr.vannes.gretajavafx.model.SousCategorie;
+
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public class AjoutMediaController
-{
+public class AjoutMediaController {
+    @FXML
+    private GridPane mediaGrid;
 
     @FXML
     private GridPane mediaGrid;
@@ -33,7 +37,9 @@ public class AjoutMediaController
     private Button enregistrerButton;
 
     private DAOFactory daoFactory;
-    private CategorieDAO categorieDAO;
+
+    private CategorieDAOImpl categorieDAO;
+
     private final MediaDAOImpl mediaDAO;
     private final Categorie categorieDefaut = new Categorie(-1, "Sélectionnez une catégorie");
     private final SousCategorie sousCategorieDefaut = new SousCategorie(-1, "Sélectionnez un genre");
@@ -49,6 +55,7 @@ public class AjoutMediaController
     public void initialize()
     {
         List<Categorie> categories = categorieDAO.findAll(true);
+
         this.categorieBox.getItems().add(categorieDefaut);
 
         if (categories != null) {
@@ -56,11 +63,14 @@ public class AjoutMediaController
         }
 
         this.categorieBox.setValue(categorieDefaut);
+
+        this.categorieBox.setOnAction(event -> categorieSelectionne());
     }
 
     @FXML
     private void categorieSelectionne()
     {
+
         Categorie selectedCategorie = this.categorieBox.getValue();
         if (selectedCategorie != null) {
             this.sousCategorieBox.getItems().clear();
@@ -72,7 +82,7 @@ public class AjoutMediaController
         }
     }
 
-    @FXML
+  
     private void ajouterMedia()
     {
         boolean valid = true;

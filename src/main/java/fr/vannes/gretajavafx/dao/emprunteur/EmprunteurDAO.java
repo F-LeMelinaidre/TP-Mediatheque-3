@@ -10,7 +10,7 @@ public interface EmprunteurDAO {
     void ajouterEmprunteur(Emprunteur emprunteur);
 
     // READ : Récupérer un emprunteur par son ID
-    Emprunteur getEmprunteurById(int id);
+    Emprunteur getEmprunteurById(int id, boolean emprunt);
 
     // READ : Récupérer tous les emprunteurs
     List<Emprunteur> getAllEmprunteurs();
@@ -20,4 +20,5 @@ public interface EmprunteurDAO {
 
     // DELETE : Supprimer un emprunteur par son ID
     void supprimerEmprunteur(int id);
+
 }

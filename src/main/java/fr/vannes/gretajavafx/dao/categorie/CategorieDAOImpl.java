@@ -53,6 +53,16 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
     }
 
     @Override
+    public Categorie update(Categorie categorie) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(Categorie categorie) {
+        return null;
+    }
+
+    @Override
     public ArrayList findAll(boolean sousCategories) {
         ArrayList<Categorie> categorieList = new ArrayList<>();
         ArrayList<Integer> categorieIds = new ArrayList<>();
@@ -98,7 +108,7 @@ public class CategorieDAOImpl implements CategorieDAO<Categorie> {
             _df.closeResultSet(rs);
             _df.closeConnection();
         }
-
+        System.out.println(categorieList);
         return categorieList;
     }
 

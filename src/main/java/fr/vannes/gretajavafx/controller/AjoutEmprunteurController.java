@@ -49,7 +49,7 @@ public class AjoutEmprunteurController {
             return;
         }
 
-        Emprunteur nouvelEmprunteur = new Emprunteur(nom, prenom, dateNaissance, null);
+        Emprunteur nouvelEmprunteur = new Emprunteur(nom, prenom, dateNaissance);
 
         emprunteurDAO.ajouterEmprunteur(nouvelEmprunteur);
         // TODO MODIFIER L AFFICHAGE EN CAS DE SUCCESS

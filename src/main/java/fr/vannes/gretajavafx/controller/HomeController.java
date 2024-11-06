@@ -3,6 +3,7 @@ package fr.vannes.gretajavafx.controller;
 import fr.vannes.gretajavafx.Main;
 import fr.vannes.gretajavafx.model.Emprunteur;
 import fr.vannes.gretajavafx.dao.emprunteur.EmprunteurDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import java.io.IOException;
@@ -39,9 +41,16 @@ public class HomeController implements Initializable {
 
     @FXML
     private StackPane rootPane;
+    @FXML
+    private MenuBar menuBar;
+    @FXML
+    private Button minimize;
 
     private final ObservableList<Emprunteur> obsPersonne = FXCollections.observableArrayList();
     private EmprunteurDAO emprunteurDAO; // DAO pour interagir avec les emprunteurs
+    private Stage stage;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     /**
      * Instance unique d'AppController
@@ -60,28 +69,32 @@ public class HomeController implements Initializable {
     public void HomeScene(Window w) {
         try {
 
-            Stage stage = (Stage) w;
+            this.stage = (Stage) w;
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("home.fxml"));
-
-            Scene scene = new Scene(loader.load(), 800, 600);
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 800, 600);
 
             stage.setTitle("Accueil");
             stage.setScene(scene);
-
+            stage.setResizable(true);
             stage.show();
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Chargement de la liste de noms fictifs
-     */
-    public void loadListe() {
-        String[] names = {"Julien", "Theo", "Pascal"};
-        maListe.getItems().addAll(names);
+    @FXML
+    private void toSendMail() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mail.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("Envoi courriel");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -93,18 +106,14 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         app = this;
-
-
     }
 
-    private void applyPopupOffset(Menu menu) {
-        menu.setOnShowing(event -> {
-            if (menu.getParentPopup() != null) {
-                // Offset the popup menu position by 8px on X and Y
-                menu.getParentPopup().setX(menu.getParentPopup().getX() + 8);
-                menu.getParentPopup().setY(menu.getParentPopup().getY() + 8);
-            }
-        });
+    /**
+     * Chargement de la liste de noms fictifs
+     */
+    public void loadListe() {
+        String[] names = {"Julien", "Theo", "Pascal"};
+        maListe.getItems().addAll(names);
     }
 
     /**
@@ -124,6 +133,74 @@ public class HomeController implements Initializable {
             monTab.setItems(obsPersonne);
         } catch (Exception e) {
             errorAlert("Erreur", "Impossible de charger les emprunteurs : " + e.getMessage());
+        }
+    }
+    private void FXMLLoader(String location) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(location));
+        Parent root = loader.load();
+
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(root);
+    }
+
+    public void ajouterEmprunteur() {
+        try {
+            this.FXMLLoader("ajoutEmprunteur.fxml");
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void ajouterMedia() {
+        try {
+            this.FXMLLoader("ajoutMedia.fxml");
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout de media : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void ajouterEmprunt() {
+        try {
+            this.FXMLLoader("ajoutEmprunt.fxml");
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void afficherEmprunteur() {
+        try {
+            this.FXMLLoader("affichageEmprunteur.fxml");
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void afficherMedia() {
+        try {
+            this.FXMLLoader("affichageMedia.fxml");
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void afficherEmprunt() {
+        try {
+            this.FXMLLoader("affichageEmprunt.fxml");
+
+
+        } catch (IOException e) {
+            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunt : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -155,101 +232,9 @@ public class HomeController implements Initializable {
         alert.showAndWait();
     }
 
-    @FXML
-    private void toSendMail() throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mail.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Envoi courriel");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void ajouterEmprunteur() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunteur.fxml"));
-            Parent ajoutEmprunteurPane = loader.load();
-
-
-            rootPane.getChildren().clear();
-            rootPane.getChildren().add(ajoutEmprunteurPane);
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void ajouterMedia() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutMedia.fxml"));
-            Parent ajoutMediaPane = loader.load();
-
-            rootPane.getChildren().clear();
-            rootPane.getChildren().add(ajoutMediaPane); // Ajouter la nouvelle vue
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'ajout de media : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void ajouterEmprunt() {
-        try {
-            // Charger le FXML pour la vue "ajoutEmprunteur"
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("ajoutEmprunt.fxml"));
-            Parent ajoutEmpruntPane = loader.load();
-
-
-            rootPane.getChildren().clear();
-            rootPane.getChildren().add(ajoutEmpruntPane);
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'ajout d'emprunteur : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void afficherEmprunteur() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunteur.fxml"));
-            Parent afficherEmprunteurPane = loader.load();
-
-            rootPane.getChildren().clear();
-            rootPane.getChildren().add(afficherEmprunteurPane);
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void afficherMedia() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageMedia.fxml"));
-            Parent afficherMediaPane = loader.load();
-
-            rootPane.getChildren().clear();
-            rootPane.getChildren().add(afficherMediaPane);
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunteur : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void afficherEmprunt() {
-        try {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("affichageEmprunt.fxml"));
-        Parent afficherEmpruntPane = loader.load();
-
-        rootPane.getChildren().clear();
-        rootPane.getChildren().add(afficherEmpruntPane);
-
-        } catch (IOException e) {
-            errorAlert("Erreur", "Impossible de charger l'interface d'affichage d'emprunt : " + e.getMessage());
-            e.printStackTrace();
-        }
+    public void onCloseClick()
+    {
+        Platform.exit();
     }
 
 }

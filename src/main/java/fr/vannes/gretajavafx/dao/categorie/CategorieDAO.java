@@ -8,7 +8,7 @@ public interface CategorieDAO<Categorie> {
     Boolean create(Categorie categorie);
 
     Categorie findByID(int id);
-    ArrayList findAll(boolean sousCategories);
+    ArrayList<Categorie> findAll(boolean sousCategories);
     Categorie update(Categorie categorie);
     Boolean delete(Categorie categorie);
 }

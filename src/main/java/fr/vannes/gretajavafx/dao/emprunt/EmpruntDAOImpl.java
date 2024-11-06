@@ -117,8 +117,10 @@ public class EmpruntDAOImpl implements EmpruntDAO
             while (rs.next()) {
                 int emprunteurId = rs.getInt("emprunteur_id");
                 String mediaId = rs.getString("media_id");
+
                 LocalDate dateEmprunt = rs.getDate("date_emprunt").toLocalDate();
                 LocalDate dateRetour = (rs.getDate("date_retour") != null)? rs.getDate("date_retour").toLocalDate() : null;
+
                 Emprunteur emprunteur = this.getEmprunteur(rs);
                 Media media = this.getMedia(rs, this.getCategorie(rs), this.getSousCategorie(rs));
                 Emprunt emprunt = new Emprunt(emprunteurId, mediaId, dateEmprunt, dateRetour, emprunteur, media);
@@ -176,6 +178,30 @@ public class EmpruntDAOImpl implements EmpruntDAO
         } finally {
             _df.closeConnection();
         }
+    }
+
+    @Override
+    public boolean estDisponible(String mediaId)
+    {
+        String sql = "SELECT COUNT(*) > 0 AS est_emprunte FROM emprunt WHERE media_id = ? AND date_retour IS NULL";
+        ResultSet rs = null;
+        boolean estDisponible = false;
+
+        try (PreparedStatement statement = _conn.prepareStatement(sql)) {
+            statement.setString(1, mediaId);
+            rs = statement.executeQuery();
+
+            if (rs.next()) {
+                estDisponible = rs.getBoolean("est_emprunte");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la récupération des emprunts : " + e.getMessage(), e);
+        } finally {
+            _df.closeResultSet(rs);
+            _df.closeConnection();
+        }
+
+        return !estDisponible;
     }
 
     @Override

@@ -1,20 +1,22 @@
 package fr.vannes.gretajavafx.dao.emprunteur;
 
 import fr.vannes.gretajavafx.dao.DAOFactory;
-import fr.vannes.gretajavafx.model.Emprunteur;
+import fr.vannes.gretajavafx.model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmprunteurDAOImpl implements EmprunteurDAO {
+public class EmprunteurDAOImpl implements EmprunteurDAO
+{
 
     private static EmprunteurDAOImpl _instance = null;
     private static Connection _conn = null;
     private static DAOFactory _df;
 
-    private EmprunteurDAOImpl(DAOFactory df) throws SQLException {
+    private EmprunteurDAOImpl(DAOFactory df) throws SQLException
+    {
         try {
             _conn = df.getConnection();
         } catch (SQLException e) {
@@ -40,7 +42,8 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         return _instance;
     }
 
-    public void ajouterEmprunteur(Emprunteur emprunteur) {
+    public void ajouterEmprunteur(Emprunteur emprunteur)
+    {
         String sql = "INSERT INTO emprunteur (nom, prenom, date_naissance) VALUES (?, ?, ?)";
         ResultSet generatedKeys = null;
 
@@ -73,10 +76,27 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         }
     }
 
-    public Emprunteur getEmprunteurById(int id) {
-        String sql = "SELECT * FROM emprunteur WHERE emprunteur_id = ?";
+    //TODO faire un getter Emprunteur => Emprunt (Media Categorie Sous-Catégorie) non retourné
+    public Emprunteur getEmprunteurById(int id, boolean emprunt)
+    {
         Emprunteur emprunteur = null;
         ResultSet resultSet = null;
+
+        String select = "SELECT e.emprunteur_id, e.nom, e.prenom, e.date_naissance ";
+        String from = "FROM emprunteur e ";
+        String where = "WHERE e.emprunteur_id = ?";
+
+        if (emprunt) {
+            select += ", ep.media_id, ep.date_emprunt, ep.date_retour, " +
+                      "m.titre, m.description, " +
+                      "m.categorie_id, m.sous_categorie_id, c.label as categorieLabel, sc.label as sousCategorieLabel ";
+            from += "INNER JOIN emprunt ep ON e.emprunteur_id = ep.emprunteur_id ";
+            from += "INNER JOIN media m ON ep.media_id = m.media_id ";
+            from += "INNER JOIN categorie c ON m.categorie_id = c.categorie_id ";
+            from += "INNER JOIN sous_categorie sc ON m.sous_categorie_id = sc.sous_categorie_id ";
+        }
+
+        String sql = select + from + where;
 
         try (PreparedStatement statement = _conn.prepareStatement(sql)) {
 
@@ -88,7 +108,13 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
                 String prenom = resultSet.getString("prenom");
                 LocalDate dateNaissance = resultSet.getDate("date_naissance").toLocalDate();
 
-                emprunteur = new Emprunteur(id, nom, prenom, dateNaissance, new ArrayList<>());
+                emprunteur = new Emprunteur(id, nom, prenom, dateNaissance);
+
+                if (emprunt) {
+                    do {
+                        this.getResultSetEmprunt(emprunteur, resultSet);
+                    } while (resultSet.next());
+                }
             }
 
         } catch (SQLException e) {
@@ -103,7 +129,8 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         return emprunteur;
     }
 
-    public List<Emprunteur> getAllEmprunteurs() {
+    public List<Emprunteur> getAllEmprunteurs()
+    {
         List<Emprunteur> emprunteurs = new ArrayList<>();
         String sql = "SELECT * FROM emprunteur";
         ResultSet resultSet = null;
@@ -118,7 +145,7 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
                 String prenom = resultSet.getString("prenom");
                 LocalDate dateNaissance = resultSet.getDate("date_naissance").toLocalDate();
 
-                Emprunteur emprunteur = new Emprunteur(id, nom, prenom, dateNaissance, new ArrayList<>());
+                Emprunteur emprunteur = new Emprunteur(id, nom, prenom, dateNaissance);
                 emprunteurs.add(emprunteur);
             }
 
@@ -134,7 +161,8 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         return emprunteurs;
     }
 
-    public void updateEmprunteur(Emprunteur emprunteur) {
+    public void updateEmprunteur(Emprunteur emprunteur)
+    {
         String sql = "UPDATE emprunteur SET nom = ?, prenom = ?, date_naissance = ? WHERE emprunteur_id = ?";
 
         try (PreparedStatement statement = _conn.prepareStatement(sql)) {
@@ -154,7 +182,8 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         }
     }
 
-    public void supprimerEmprunteur(int id) {
+    public void supprimerEmprunteur(int id)
+    {
         String sql = "DELETE FROM emprunteur WHERE emprunteur_id = ?";
 
         try (PreparedStatement statement = _conn.prepareStatement(sql)) {
@@ -169,5 +198,30 @@ public class EmprunteurDAOImpl implements EmprunteurDAO {
         } finally {
             _df.closeConnection();
         }
+    }
+
+    private void getResultSetEmprunt(Emprunteur emprunteur, ResultSet resultSet) throws SQLException
+    {
+        String mediaId = resultSet.getString("media_id");
+        String titre = resultSet.getString("titre");
+        String description = resultSet.getString("description");
+
+        LocalDate dateEmprunt = resultSet.getDate("date_emprunt").toLocalDate();
+        LocalDate dateRetour = (resultSet.getDate("date_retour") != null)? resultSet.getDate("date_retour").toLocalDate() : null;
+
+        int categorieId = resultSet.getInt("categorie_id");
+        String categorieLabel = resultSet.getString("categorieLabel");
+        int sousCategorieId = resultSet.getInt("sous_categorie_id");
+        String sousCategorieLabel = resultSet.getString("sousCategorieLabel");
+
+        Categorie categorie = new Categorie(categorieId, categorieLabel);
+        SousCategorie sousCategorie = new SousCategorie(sousCategorieId, sousCategorieLabel);
+
+        Media media = new Media(mediaId, titre, description, categorie, sousCategorie);
+
+        Emprunt emprunt = new Emprunt(emprunteur.getEmprunteurId(), mediaId, dateEmprunt, dateRetour, media);
+
+        emprunteur.addEmprunt(emprunt);
+
     }
 }

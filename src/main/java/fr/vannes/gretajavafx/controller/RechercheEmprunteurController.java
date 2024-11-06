@@ -56,7 +56,7 @@ public class RechercheEmprunteurController {
 
         try {
             // Rechercher l'emprunteur par ID
-            Emprunteur emprunteur = emprunteurDAO.getEmprunteurById(emprunteurId);
+            Emprunteur emprunteur = emprunteurDAO.getEmprunteurById(emprunteurId, false);
 
             if (emprunteur != null) {
                 // Afficher les informations de l'emprunteur trouvé
